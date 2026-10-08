@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Blank Reel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;1,7..72,400&display=swap">
+<style>
+/* Layout: one narrow column, like a script page; the trailer player is the one dark "screen" object in both themes. */
+:root{
+  --bg:#eceef6; --paper:#ffffff; --ink:#151a3e; --muted:#5b6188; --line:#d4d8ea;
+  --cobalt:#2b3fd1; --cobalt-ink:#ffffff; --marker:#ffd94a; --marker-ink:#151a3e;
+  --screen:#0c0f2a; --screen-ink:#f3f4ff; --ok:#1f8a5b;
+  --display:"Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --body:"Literata", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0c0f24; --paper:#151938; --ink:#eef0ff; --muted:#9ea5cc; --line:#2a2f57;
+  --cobalt:#8f9dff; --cobalt-ink:#0c0f24; --marker:#ffd94a; --marker-ink:#151a3e;
+  --screen:#05071a; --screen-ink:#f3f4ff; --ok:#4cc58f; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0c0f24; --paper:#151938; --ink:#eef0ff; --muted:#9ea5cc; --line:#2a2f57;
+  --cobalt:#8f9dff; --cobalt-ink:#0c0f24; --marker:#ffd94a; --marker-ink:#151a3e;
+  --screen:#05071a; --screen-ink:#f3f4ff; --ok:#4cc58f; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:640px;margin:0 auto;padding:24px 16px 56px;display:flex;flex-direction:column;gap:24px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.logo{font-family:var(--display);font-weight:800;font-size:2rem;line-height:1;letter-spacing:-.02em;margin:0}
+.logo span{background:var(--marker);color:var(--marker-ink);padding:0 .15em;border-radius:3px}
+.meta{font-family:var(--mono);font-size:.78rem;color:var(--muted);text-align:right}
+.meta b{color:var(--ink);font-weight:500}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 20px;display:flex;flex-direction:column;gap:14px}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h2{font-family:var(--display);font-weight:800;font-size:1.7rem;line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h3{font-family:var(--display);font-weight:600;font-size:1.15rem;margin:0}
+p{margin:0}
+.muted{color:var(--muted)}
+.facts{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:.75rem;border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--muted)}
+
+button{font:inherit;cursor:pointer}
+.btn{font-family:var(--display);font-weight:600;font-size:1rem;border:0;border-radius:10px;padding:12px 18px;background:var(--cobalt);color:var(--cobalt-ink)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,input:focus-visible,.link:focus-visible{outline:3px solid var(--marker);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:0;font-family:var(--mono);font-size:.78rem}
+
+/* Fill step */
+.dots{display:flex;gap:6px}
+.dots i{flex:1;height:5px;border-radius:3px;background:var(--line)}
+.dots i.on{background:var(--cobalt)}
+.prompt{font-family:var(--display);font-weight:800;font-size:2.1rem;line-height:1.05;margin:0}
+.hint{font-family:var(--mono);font-size:.82rem;color:var(--muted)}
+input[type=text]{font-family:var(--body);font-size:1.3rem;width:100%;box-sizing:border-box;padding:12px 14px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=text]:focus{border-color:var(--cobalt)}
+
+/* Story */
+.story{font-size:1.12rem;line-height:1.7;display:flex;flex-direction:column;gap:10px}
+.w{background:var(--marker);color:var(--marker-ink);padding:0 .2em;border-radius:3px;font-style:italic;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+
+/* Player */
+.player{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:12px;overflow:hidden;background:var(--screen);color:var(--screen-ink)}
+.player .bgfx{position:absolute;inset:0;transition:background .8s}
+.player .tc{position:absolute;top:10px;left:12px;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;opacity:.85}
+.player .rec{position:absolute;top:10px;right:12px;font-family:var(--mono);font-size:.7rem;opacity:.85}
+.player .cap{position:absolute;left:0;right:0;bottom:26px;padding:0 18px;text-align:center;font-family:var(--display);font-weight:600;font-size:clamp(.95rem,3.6vw,1.35rem);line-height:1.25;text-wrap:balance;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.player .cap .w{font-style:normal}
+.player .title{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;font-family:var(--display);font-weight:800;font-size:clamp(1.3rem,5vw,2rem);line-height:1.1}
+.player .title small{display:block;font-family:var(--mono);font-weight:400;font-size:.7rem;letter-spacing:.1em;opacity:.7;margin-top:8px}
+.segs{position:absolute;left:12px;right:12px;bottom:10px;display:flex;gap:4px}
+.segs i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.22);overflow:hidden}
+.segs i b{display:block;height:100%;width:0;background:var(--marker)}
+
+.render{list-style:none;margin:0;padding:0;font-family:var(--mono);font-size:.8rem;display:flex;flex-direction:column;gap:4px}
+.render li{color:var(--muted)}
+.render li.done{color:var(--ok)}
+.render li.now{color:var(--ink)}
+
+/* Storyboard */
+.shots{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none}
+.shot{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
+.shot:first-child{border-top:0;padding-top:0}
+.shot .t{font-family:var(--mono);font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.shot .t b{display:block;color:var(--ink);font-weight:500;font-size:.8rem}
+.shot div{min-width:0;display:flex;flex-direction:column;gap:6px}
+.vp{font-family:var(--mono);font-size:.76rem;line-height:1.5;color:var(--muted);background:var(--bg);border-radius:8px;padding:8px 10px;overflow-wrap:anywhere}
+.vp em{font-style:normal;color:var(--ink);background:color-mix(in srgb,var(--marker) 40%,transparent);border-radius:2px;padding:0 2px}
+
+textarea{font-family:var(--mono);font-size:.8rem;width:100%;box-sizing:border-box;min-height:96px;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+.ok{color:var(--ok);font-family:var(--mono);font-size:.8rem}
+footer{font-family:var(--mono);font-size:.74rem;color:var(--muted);display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:16px}
+@media (prefers-reduced-motion: reduce){ .player .bgfx{transition:none} }
+</style><style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar b{display:block;height:100%;width:0;background:var(--cobalt);transition:width .4s}
+video{width:100%;max-width:100%;aspect-ratio:16/9;border-radius:12px;background:var(--screen)}
+details summary{cursor:pointer;font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+details[open] summary{margin-bottom:12px}
+.err{color:#c2412d;font-family:var(--mono);font-size:.82rem}
+.note{font-family:var(--mono);font-size:.76rem;color:var(--muted);background:var(--bg);border-radius:8px;padding:8px 10px}
+@media (prefers-reduced-motion: reduce){ .bar b{transition:none} }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1 class="logo">Blank <span>Reel</span></h1>
+    <div class="meta">Daily <b id="dayNo">#–</b><br><span id="countdown">Next story in --</span></div>
+  </header>
+  <main id="app"><section class="card"><p class="muted">Loading today's story…</p></section></main>
+  <footer>
+    <p id="mode"></p>
+    <div class="row"><button class="link" id="practice" type="button">Play another story</button><button class="link" id="reset" type="button">Start this story over</button></div>
+  </footer>
+</div>
+
+<script>
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fill = (str, a) => esc(str).replace(/\{(\d)\}/g, (_, i) => `<span class="w">${esc(a[i] || '___')}</span>`);
+const fillVp = (str, a) => esc(str).replace(/\{(\d)\}/g, (_, i) => `<em>${esc(a[i] || '___')}</em>`);
+const ls = {
+  get(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} },
+  del(k){ try { localStorage.removeItem(k); } catch(e){} }
+};
+
+let info, state, key, poll;
+
+async function boot(storyIdx){
+  clearTimeout(poll);
+  const r = await fetch('/api/today' + (storyIdx != null ? '?story=' + storyIdx : ''));
+  info = await r.json();
+  document.getElementById('dayNo').textContent = '#' + info.day;
+  document.getElementById('mode').textContent = info.mock
+    ? 'Test mode: no Gemini key on the server, so trailers use plain color frames and no narration.'
+    : 'Each trailer is AI-drawn and AI-narrated from your answers.';
+  key = `blankreel-${info.day}-${info.storyIndex}`;
+  state = ls.get(key) || {answers: [], step: 0, phase: 'intro', job: null};
+  render();
+}
+const save = () => ls.set(key, state);
+const S = () => info.story;
+
+function tick(){
+  const now = new Date(), next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const m = Math.floor((next - now) / 6e4);
+  document.getElementById('countdown').textContent = `Next story in ${Math.floor(m/60)}h ${m%60}m`;
+}
+tick(); setInterval(tick, 30000);
+
+function render(){
+  if (state.phase === 'intro') return renderIntro();
+  if (state.phase === 'fill') return renderFill();
+  renderReveal();
+}
+
+function renderIntro(){
+  const t = S();
+  app.innerHTML = `<section class="card">
+    <p class="eyebrow">${info.practice ? 'Bonus story' : "Today's story"}</p>
+    <h2>${esc(t.title)}</h2>
+    <p class="muted">${esc(t.logline)} You won't see the script until you're done. Fill ${t.blanks.length} blanks, then we turn your answers into a narrated ${t.scenes.length}-shot trailer.</p>
+    <div class="facts"><span class="chip">${t.blanks.length} blanks</span><span class="chip">${t.scenes.length} shots</span><span class="chip">about 30 seconds</span></div>
+    <div class="row"><button class="btn" id="go" type="button">Start filling blanks</button></div>
+  </section>`;
+  document.getElementById('go').onclick = () => { state.phase = 'fill'; save(); render(); };
+}
+
+function renderFill(){
+  const t = S(), i = state.step, b = t.blanks[i];
+  app.innerHTML = `<section class="card">
+    <div class="dots">${t.blanks.map((_, k) => `<i class="${k <= i ? 'on' : ''}"></i>`).join('')}</div>
+    <p class="eyebrow">Blank ${i+1} of ${t.blanks.length}</p>
+    <form id="f" style="display:flex;flex-direction:column;gap:14px">
+      <label for="ans" class="prompt">${esc(b.label)}</label>
+      <p class="hint">like: ${esc(b.hint)}</p>
+      <input type="text" id="ans" autocomplete="off" maxlength="40" value="${esc(state.answers[i] || '')}">
+      <div class="row">
+        <button class="btn" id="next" type="submit">${i === t.blanks.length - 1 ? 'Reveal my story' : 'Next blank'}</button>
+        ${i > 0 ? '<button class="btn ghost" id="back" type="button">Back</button>' : ''}
+      </div>
+    </form>
+  </section>`;
+  const inp = document.getElementById('ans'), nb = document.getElementById('next');
+  const upd = () => nb.disabled = !inp.value.trim();
+  inp.oninput = upd; upd(); inp.focus();
+  document.getElementById('f').onsubmit = e => {
+    e.preventDefault();
+    if (!inp.value.trim()) return;
+    state.answers[i] = inp.value.trim();
+    if (i === t.blanks.length - 1) state.phase = 'reveal'; else state.step++;
+    save(); render();
+  };
+  const back = document.getElementById('back');
+  if (back) back.onclick = () => { state.answers[i] = inp.value.trim(); state.step--; save(); render(); };
+}
+
+function renderReveal(){
+  const t = S(), a = state.answers;
+  app.innerHTML = `
+  <section class="card">
+    <p class="eyebrow">Your story</p>
+    <h2>${esc(t.title)}</h2>
+    <div class="story">${t.scenes.map(s => `<p>${fill(s.line, a)}</p>`).join('')}</div>
+    ${state.job ? '' : '<div class="row"><button class="link" id="edit" type="button">Change my answers</button></div>'}
+  </section>
+  <section class="card" id="trailer"></section>
+  <section class="card">
+    <details><summary>Shot list sent to the image model</summary>
+      <ol class="shots">${t.scenes.map((s, k) => `<li class="shot">
+        <span class="t"><b>Shot ${k+1}</b></span>
+        <div><p>${fill(s.line, a)}</p><p class="vp">${fillVp(s.shot, a)}</p></div>
+      </li>`).join('')}</ol>
+    </details>
+  </section>`;
+  const edit = document.getElementById('edit');
+  if (edit) edit.onclick = () => { state.phase = 'fill'; state.step = 0; save(); render(); };
+  renderTrailer();
+}
+
+function renderTrailer(){
+  const box = document.getElementById('trailer');
+  if (!box) return;
+  if (!state.job){
+    const code = ls.get('blankreel-code') || '';
+    box.innerHTML = `<p class="eyebrow">Your trailer</p>
+      <h3>Turn this into a video</h3>
+      <p class="muted">Takes a minute or two. You'll get a link to text to your friends.</p>
+      ${info.needsCode ? `<label for="code" class="hint">Crew code</label><input type="text" id="code" autocomplete="off" value="${esc(code)}">` : ''}
+      <div class="row"><button class="btn" id="make" type="button">Make my trailer</button></div>
+      <p class="err" id="err" hidden></p>`;
+    document.getElementById('make').onclick = make;
+    return;
+  }
+  box.innerHTML = `<p class="eyebrow">Your trailer</p><h3 id="tstep">Checking…</h3><div class="bar"><b id="tbar"></b></div><p class="hint" id="tpos"></p>`;
+  check();
+}
+
+async function make(){
+  const btn = document.getElementById('make'), err = document.getElementById('err');
+  const codeEl = document.getElementById('code'), code = codeEl ? codeEl.value.trim() : '';
+  btn.disabled = true; err.hidden = true;
+  try {
+    const r = await fetch('/api/trailers', {method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({story: info.storyIndex, answers: state.answers, code})});
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || 'Something went wrong.');
+    if (code) ls.set('blankreel-code', code);
+    state.job = j.id; save(); render();
+  } catch(e){
+    err.textContent = e.message; err.hidden = false; btn.disabled = false;
+  }
+}
+
+async function check(){
+  clearTimeout(poll);
+  let j;
+  try {
+    const r = await fetch('/api/trailers/' + state.job);
+    j = await r.json();
+    if (!r.ok) throw new Error(j.error);
+  } catch(e){
+    state.job = null; save(); return renderTrailer();
+  }
+  const box = document.getElementById('trailer');
+  if (!box) return;
+  if (j.status === 'done') return showDone(j);
+  if (j.status === 'failed'){
+    box.innerHTML = `<p class="eyebrow">Your trailer</p><h3>That one didn't render</h3><p class="err">${esc(j.error)}</p>
+      <div class="row"><button class="btn" id="retry" type="button">Try again</button></div>`;
+    document.getElementById('retry').onclick = () => { state.job = null; save(); render(); };
+    return;
+  }
+  document.getElementById('tstep').textContent = j.status === 'queued' ? 'Waiting in line' : j.step + '…';
+  document.getElementById('tbar').style.width = (j.total ? Math.round(100 * j.done / j.total) : 3) + '%';
+  document.getElementById('tpos').textContent = j.position ? `${j.position} ahead of you, counting yours` : '';
+  poll = setTimeout(check, 2000);
+}
+
+function showDone(j){
+  const box = document.getElementById('trailer');
+  const link = location.origin + '/t/' + j.id;
+  box.innerHTML = `<p class="eyebrow">Your trailer</p>
+    <video src="/v/${j.id}.mp4" poster="/v/${j.id}.jpg" controls playsinline></video>
+    <h3>Send it to the group chat</h3>
+    <input type="text" id="link" readonly value="${esc(link)}">
+    <div class="row"><button class="btn" id="copy" type="button">Copy link</button>
+      <a class="link" href="${esc(link)}" target="_blank" rel="noopener">Open share page</a>
+      <span class="ok" id="copied" hidden>Copied</span></div>`;
+  document.getElementById('copy').onclick = () => {
+    const el = document.getElementById('link'), ok = document.getElementById('copied');
+    const done = () => { ok.hidden = false; setTimeout(() => ok.hidden = true, 1800); };
+    const sel = () => { el.focus(); el.select(); };
+    try { navigator.clipboard.writeText(el.value).then(done, sel); } catch(e){ sel(); }
+  };
+}
+
+document.getElementById('practice').onclick = () => boot((info.storyIndex + 1) % info.storyCount);
+document.getElementById('reset').onclick = () => { ls.del(key); state = {answers: [], step: 0, phase: 'intro', job: null}; clearTimeout(poll); render(); };
+
+boot().catch(() => { app.innerHTML = '<section class="card"><p class="err">Couldn\'t reach the Blank Reel server.</p></section>'; });
+</script>
+</body>
+</html>

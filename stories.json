@@ -1,0 +1,89 @@
+[
+  {
+    "title": "Heist at the County Fair",
+    "logline": "A small-town crew goes after the blue ribbon.",
+    "blanks": [
+      {"label": "Adjective", "hint": "sweaty"},
+      {"label": "Animal (plural)", "hint": "raccoons"},
+      {"label": "Food", "hint": "pickle"},
+      {"label": "Verb ending in -ing", "hint": "yodeling"},
+      {"label": "Body part", "hint": "elbow"},
+      {"label": "Something in your kitchen", "hint": "spatula"},
+      {"label": "Job title", "hint": "dentist"},
+      {"label": "Exclamation", "hint": "Holy guacamole"},
+      {"label": "Number", "hint": "12"}
+    ],
+    "scenes": [
+      {"line": "Every year the county fair crowns one prize {2}. This year, a crew of {1} decided to steal it.",
+       "shot": "Wide night shot of a small-town county fair, Ferris wheel lights, a gang of {1} in tiny black beanies peeking out from behind a funnel cake stand"},
+      {"line": "Their leader, a {0} {6} named Biscuit, drew the plan on a napkin.",
+       "shot": "Close-up of a {0} {6} sketching a heist plan on a greasy napkin under a single hanging bulb"},
+      {"line": "Step one: distract the judges by {3} in the livestock barn.",
+       "shot": "Inside a livestock barn, the crew {3} wildly while three judges wearing ribbon sashes stare"},
+      {"line": "Step two: swap the prize {2} for a decoy made from a {5}.",
+       "shot": "A blue-ribbon table, a gloved hand replacing the prize {2} with a decoy made from a {5}"},
+      {"line": "It almost worked, until somebody's {4} got stuck in the pie case.",
+       "shot": "Comedic close-up of a {4} jammed in a glass pie case, a red alarm light spinning"},
+      {"line": "\"{7}!\" they yelled, and escaped on {8} stolen tractors.",
+       "shot": "Dawn chase, {8} tractors bouncing across a cornfield, the crew shouting, fair lights behind them"}
+    ]
+  },
+  {
+    "title": "First Day on the Moon Base",
+    "logline": "New job, new roommate, very far from home.",
+    "blanks": [
+      {"label": "Adjective", "hint": "crunchy"},
+      {"label": "Plural noun", "hint": "socks"},
+      {"label": "Verb ending in -ing", "hint": "whistling"},
+      {"label": "Animal", "hint": "goat"},
+      {"label": "Color", "hint": "mauve"},
+      {"label": "Object", "hint": "stapler"},
+      {"label": "City", "hint": "Toledo"},
+      {"label": "Silly word", "hint": "blorp"},
+      {"label": "Number", "hint": "47"}
+    ],
+    "scenes": [
+      {"line": "Day one at Moon Base {8}. I packed {0} snacks and my lucky {5}.",
+       "shot": "Astronaut unpacking a duffel in a cramped lunar module, {0} snacks and a {5} floating in low gravity"},
+      {"line": "My new roommate was a {3} who would not stop {2}.",
+       "shot": "Bunk room on a moon base, a {3} in a tiny spacesuit {2} nonstop while the astronaut stares at the ceiling"},
+      {"line": "The commander said our only job was to guard the {1}.",
+       "shot": "Commander pointing at a glowing vault full of {1} on the lunar surface, Earth hanging in the sky"},
+      {"line": "Then the sky turned {4} and every light went out.",
+       "shot": "Lunar horizon glowing {4}, moon base lights flickering off one by one"},
+      {"line": "A voice on the radio whispered, \"{7}... {7}...\"",
+       "shot": "Close-up of a crackling old radio inside a spacesuit helmet, static glow on the visor"},
+      {"line": "It was my mom, calling from {6} to ask if I'd eaten.",
+       "shot": "Split screen, a mom in a kitchen in {6} on the phone, an astronaut on the moon slumping with relief"}
+    ]
+  },
+  {
+    "title": "The Best Man's Toast",
+    "logline": "He wrote note cards. He did not read them first.",
+    "blanks": [
+      {"label": "First name", "hint": "Gerald"},
+      {"label": "Adjective", "hint": "moist"},
+      {"label": "Verb, past tense", "hint": "juggled"},
+      {"label": "Food (plural)", "hint": "meatballs"},
+      {"label": "Vehicle", "hint": "forklift"},
+      {"label": "Animal", "hint": "llama"},
+      {"label": "Dance move", "hint": "the worm"},
+      {"label": "Drink", "hint": "gravy"},
+      {"label": "Body part", "hint": "eyebrows"}
+    ],
+    "scenes": [
+      {"line": "Hi, I'm {0}, the best man. The groom and I {2} together in third grade.",
+       "shot": "Best man at a wedding reception microphone, string lights, nervous grin, gripping note cards"},
+      {"line": "He's {1}, he's loyal, and he once ate forty {3} on a dare.",
+       "shot": "Grainy flashback, two kids at a cafeteria table, one eating a mountain of {3}"},
+      {"line": "The day he met the bride, he rolled up on a {4}.",
+       "shot": "A groom arriving on a {4} in a parking lot, the bride turning around in surprise"},
+      {"line": "Their first date ended with a {5} loose in the restaurant.",
+       "shot": "Fancy restaurant chaos as a {5} sprints between tables, waiters diving"},
+      {"line": "So raise your {7}, and join me in {6}.",
+       "shot": "Wedding guests raising glasses of {7}, the whole room breaking into {6}"},
+      {"line": "Wait. Why is everyone staring at my {8}?",
+       "shot": "Best man frozen at the microphone, camera close on his {8}, the crowd staring"}
+    ]
+  }
+]
