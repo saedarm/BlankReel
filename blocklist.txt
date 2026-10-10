@@ -1,0 +1,28 @@
+# Answers containing any of these words or phrases always go to the review
+# queue before reaching the public feed, even with BLANKREEL_REVIEW=off.
+# One per line, lowercase. Add more here or in the BLANKREEL_BLOCKLIST secret
+# (comma-separated) so you don't have to commit them.
+# Wrap a word in spaces (" ass ") to match it only as a whole word.
+nazi
+hitler
+kkk
+porn
+rape
+rapist
+molest
+nude
+naked
+penis
+vagina
+cocaine
+heroin
+meth
+suicide
+kill yourself
+kys
+school shooting
+terrorist
+9/11
+ ass 
+ tits 
+ cum 
