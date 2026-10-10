@@ -8,33 +8,37 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;1,7..72,400&display=swap">
 <style>
-/* Layout: one narrow column, like a script page; the trailer player is the one dark "screen" object in both themes. */
+/* One narrow column like a script page; the room wall widens to two columns of trailers. */
 :root{
   --bg:#eceef6; --paper:#ffffff; --ink:#151a3e; --muted:#5b6188; --line:#d4d8ea;
   --cobalt:#2b3fd1; --cobalt-ink:#ffffff; --marker:#ffd94a; --marker-ink:#151a3e;
-  --screen:#0c0f2a; --screen-ink:#f3f4ff; --ok:#1f8a5b;
+  --screen:#0c0f2a; --ok:#1f8a5b; --bad:#c2412d;
   --display:"Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
   --body:"Literata", Georgia, "Times New Roman", serif;
   --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme:light;
 }
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+@media (prefers-color-scheme: dark){ :root{
   --bg:#0c0f24; --paper:#151938; --ink:#eef0ff; --muted:#9ea5cc; --line:#2a2f57;
-  --cobalt:#8f9dff; --cobalt-ink:#0c0f24; --marker:#ffd94a; --marker-ink:#151a3e;
-  --screen:#05071a; --screen-ink:#f3f4ff; --ok:#4cc58f; color-scheme:dark }}
-:root[data-theme="dark"]{
-  --bg:#0c0f24; --paper:#151938; --ink:#eef0ff; --muted:#9ea5cc; --line:#2a2f57;
-  --cobalt:#8f9dff; --cobalt-ink:#0c0f24; --marker:#ffd94a; --marker-ink:#151a3e;
-  --screen:#05071a; --screen-ink:#f3f4ff; --ok:#4cc58f; color-scheme:dark }
-
+  --cobalt:#8f9dff; --cobalt-ink:#0c0f24; --screen:#05071a; --ok:#4cc58f; --bad:#ff8a70; color-scheme:dark }}
+*{box-sizing:border-box}
+html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
-.wrap{max-width:640px;margin:0 auto;padding:24px 16px 56px;display:flex;flex-direction:column;gap:24px}
+[hidden]{display:none!important}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px 56px;display:flex;flex-direction:column;gap:20px}
+.wrap.wide{max-width:960px}
 header{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
-.logo{font-family:var(--display);font-weight:800;font-size:2rem;line-height:1;letter-spacing:-.02em;margin:0}
+main{display:flex;flex-direction:column;gap:16px}
+.logo{font-family:var(--display);font-weight:800;font-size:2rem;line-height:1;letter-spacing:-.02em;margin:0;color:var(--ink);text-decoration:none}
 .logo span{background:var(--marker);color:var(--marker-ink);padding:0 .15em;border-radius:3px}
 .meta{font-family:var(--mono);font-size:.78rem;color:var(--muted);text-align:right}
 .meta b{color:var(--ink);font-weight:500}
+nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:.82rem}
+nav a,nav button{color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:var(--paper);cursor:pointer;font:inherit}
+nav a.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+nav .me{margin-left:auto}
 
-.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 20px;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 20px;display:flex;flex-direction:column;gap:14px;min-width:0}
 .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
 h2{font-family:var(--display);font-weight:800;font-size:1.7rem;line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.01em}
 h3{font-family:var(--display);font-weight:600;font-size:1.15rem;margin:0}
@@ -44,108 +48,204 @@ p{margin:0}
 .chip{font-family:var(--mono);font-size:.75rem;border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--muted)}
 
 button{font:inherit;cursor:pointer}
-.btn{font-family:var(--display);font-weight:600;font-size:1rem;border:0;border-radius:10px;padding:12px 18px;background:var(--cobalt);color:var(--cobalt-ink)}
+.btn{font-family:var(--display);font-weight:600;font-size:1rem;border:0;border-radius:10px;padding:12px 18px;background:var(--cobalt);color:var(--cobalt-ink);text-decoration:none;display:inline-block}
 .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:8px 12px;font-size:.9rem}
 .btn:disabled{opacity:.45;cursor:not-allowed}
-.btn:focus-visible,input:focus-visible,.link:focus-visible{outline:3px solid var(--marker);outline-offset:2px}
+.btn:focus-visible,input:focus-visible,.link:focus-visible,nav a:focus-visible,nav button:focus-visible,.dice:focus-visible{outline:3px solid var(--marker);outline-offset:2px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .link{background:none;border:0;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:0;font-family:var(--mono);font-size:.78rem}
+form.stack{display:flex;flex-direction:column;gap:12px}
 
-/* Fill step */
 .dots{display:flex;gap:6px}
 .dots i{flex:1;height:5px;border-radius:3px;background:var(--line)}
 .dots i.on{background:var(--cobalt)}
 .prompt{font-family:var(--display);font-weight:800;font-size:2.1rem;line-height:1.05;margin:0}
 .hint{font-family:var(--mono);font-size:.82rem;color:var(--muted)}
-input[type=text]{font-family:var(--body);font-size:1.3rem;width:100%;box-sizing:border-box;padding:12px 14px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
-input[type=text]:focus{border-color:var(--cobalt)}
+input[type=text]{font-family:var(--body);font-size:1.2rem;width:100%;padding:12px 14px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink);min-width:0}
+input[type=text]:focus{border-color:var(--cobalt);outline:none}
+input.code{font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em}
+.inputrow{display:flex;gap:8px}
+.dice{flex:none;width:56px;border-radius:10px;border:2px solid var(--line);background:var(--paper);font-size:1.5rem;line-height:1}
+.dice:hover{border-color:var(--cobalt)}
 
-/* Story */
-.story{font-size:1.12rem;line-height:1.7;display:flex;flex-direction:column;gap:10px}
+.story{font-size:1.08rem;line-height:1.7;display:flex;flex-direction:column;gap:10px}
 .w{background:var(--marker);color:var(--marker-ink);padding:0 .2em;border-radius:3px;font-style:italic;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-
-/* Player */
-.player{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:12px;overflow:hidden;background:var(--screen);color:var(--screen-ink)}
-.player .bgfx{position:absolute;inset:0;transition:background .8s}
-.player .tc{position:absolute;top:10px;left:12px;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;opacity:.85}
-.player .rec{position:absolute;top:10px;right:12px;font-family:var(--mono);font-size:.7rem;opacity:.85}
-.player .cap{position:absolute;left:0;right:0;bottom:26px;padding:0 18px;text-align:center;font-family:var(--display);font-weight:600;font-size:clamp(.95rem,3.6vw,1.35rem);line-height:1.25;text-wrap:balance;text-shadow:0 2px 12px rgba(0,0,0,.6)}
-.player .cap .w{font-style:normal}
-.player .title{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;font-family:var(--display);font-weight:800;font-size:clamp(1.3rem,5vw,2rem);line-height:1.1}
-.player .title small{display:block;font-family:var(--mono);font-weight:400;font-size:.7rem;letter-spacing:.1em;opacity:.7;margin-top:8px}
-.segs{position:absolute;left:12px;right:12px;bottom:10px;display:flex;gap:4px}
-.segs i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.22);overflow:hidden}
-.segs i b{display:block;height:100%;width:0;background:var(--marker)}
-
-.render{list-style:none;margin:0;padding:0;font-family:var(--mono);font-size:.8rem;display:flex;flex-direction:column;gap:4px}
-.render li{color:var(--muted)}
-.render li.done{color:var(--ok)}
-.render li.now{color:var(--ink)}
-
-/* Storyboard */
-.shots{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none}
-.shot{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
-.shot:first-child{border-top:0;padding-top:0}
-.shot .t{font-family:var(--mono);font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums}
-.shot .t b{display:block;color:var(--ink);font-weight:500;font-size:.8rem}
-.shot div{min-width:0;display:flex;flex-direction:column;gap:6px}
-.vp{font-family:var(--mono);font-size:.76rem;line-height:1.5;color:var(--muted);background:var(--bg);border-radius:8px;padding:8px 10px;overflow-wrap:anywhere}
-.vp em{font-style:normal;color:var(--ink);background:color-mix(in srgb,var(--marker) 40%,transparent);border-radius:2px;padding:0 2px}
-
-textarea{font-family:var(--mono);font-size:.8rem;width:100%;box-sizing:border-box;min-height:96px;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
-.ok{color:var(--ok);font-family:var(--mono);font-size:.8rem}
-footer{font-family:var(--mono);font-size:.74rem;color:var(--muted);display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:16px}
-@media (prefers-reduced-motion: reduce){ .player .bgfx{transition:none} }
-</style><style>body{margin:0}[hidden]{display:none!important}</style>
-</head>
-<body>
-<style>
 .bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
 .bar b{display:block;height:100%;width:0;background:var(--cobalt);transition:width .4s}
-video{width:100%;max-width:100%;aspect-ratio:16/9;border-radius:12px;background:var(--screen)}
-details summary{cursor:pointer;font-family:var(--mono);font-size:.8rem;color:var(--muted)}
-details[open] summary{margin-bottom:12px}
-.err{color:#c2412d;font-family:var(--mono);font-size:.82rem}
+video{width:100%;max-width:100%;aspect-ratio:16/9;border-radius:12px;background:var(--screen);display:block}
+.placeholder{aspect-ratio:16/9;border-radius:12px;background:var(--screen);color:#f3f4ff;display:grid;place-items:center;font-family:var(--mono);font-size:.85rem}
+.err{color:var(--bad);font-family:var(--mono);font-size:.82rem}
+.ok{color:var(--ok);font-family:var(--mono);font-size:.8rem}
 .note{font-family:var(--mono);font-size:.76rem;color:var(--muted);background:var(--bg);border-radius:8px;padding:8px 10px}
+details summary{cursor:pointer;font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+details[open] summary{margin-bottom:10px}
+
+.roomlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.roomlist li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.roomlist li:first-child{border-top:0;padding-top:0}
+.roomlist a{color:var(--ink);font-family:var(--display);font-weight:600;font-size:1.1rem;text-decoration:none}
+
+.daynav{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.daynav .mid{text-align:center;min-width:0}
+.daynav .mid b{display:block;font-family:var(--display);font-size:1.1rem}
+.entries{display:grid;grid-template-columns:1fr;gap:16px}
+@media (min-width:760px){.entries{grid-template-columns:1fr 1fr}}
+.entry{gap:12px;padding:16px}
+.entry .who{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.entry .who b{font-family:var(--display);font-size:1.1rem}
+.crown{font-family:var(--mono);font-size:.72rem;background:var(--marker);color:var(--marker-ink);border-radius:99px;padding:2px 8px}
+.vote{font-family:var(--mono);font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:99px;padding:6px 12px}
+.vote.mine{background:var(--cobalt);color:var(--cobalt-ink);border-color:var(--cobalt)}
+.vote:disabled{opacity:.6;cursor:default}
+.people{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.people li{font-family:var(--mono);font-size:.78rem;border-radius:99px;padding:4px 10px;border:1px solid var(--line)}
+.people li.done{border-color:var(--ok);color:var(--ok)}
+table.board{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+table.board th,table.board td{text-align:left;padding:8px 6px;border-top:1px solid var(--line)}
+table.board th{font-family:var(--mono);font-size:.72rem;color:var(--muted);font-weight:500;border-top:0;text-transform:uppercase;letter-spacing:.06em}
+table.board td.n{text-align:right;font-family:var(--mono)}
+/* feed */
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font-family:var(--mono);font-size:.8rem;padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.tabs button.on{background:var(--cobalt);color:var(--cobalt-ink);border-color:var(--cobalt)}
+.potd{border:2px solid var(--marker)}
+.potd .eyebrow{color:var(--ink)}
+.byline{font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.reacts{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.react{font-family:var(--mono);font-size:.9rem;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:99px;padding:6px 14px;font-variant-numeric:tabular-nums}
+.react.on.up{background:var(--ok);border-color:var(--ok);color:#fff}
+.react.on.down{background:var(--bad);border-color:var(--bad);color:#fff}
+.react:disabled{opacity:.55;cursor:default}
+.spacer{flex:1}
+.score{display:flex;flex-direction:column;gap:10px;border-top:1px dashed var(--line);padding-top:14px}
+.score .big{font-family:var(--display);font-weight:800;font-size:2.2rem;line-height:1;font-variant-numeric:tabular-nums}
+.score .big small{font-size:1rem;color:var(--muted);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-family:var(--mono);font-size:.74rem;border-radius:99px;padding:3px 9px;border:1px solid var(--line)}
+.chips span.rare{background:var(--marker);color:var(--marker-ink);border-color:var(--marker)}
+.ranks{list-style:none;margin:0;padding:0;counter-reset:r}
+.ranks li{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--line);font-variant-numeric:tabular-nums;counter-increment:r}
+.ranks li:first-child{border-top:0}
+.ranks li::before{content:counter(r);font-family:var(--mono);color:var(--muted);width:1.6em;flex:none}
+.ranks li span{flex:1;min-width:0;overflow-wrap:anywhere}
+.ranks li.me span{font-weight:600}
+.ranks li b{font-family:var(--mono);font-weight:500}
+.pubstate{display:flex;flex-direction:column;gap:8px;border-top:1px dashed var(--line);padding-top:14px}
+footer{font-family:var(--mono);font-size:.74rem;color:var(--muted);display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:16px}
 @media (prefers-reduced-motion: reduce){ .bar b{transition:none} }
 </style>
-
-<div class="wrap">
+</head>
+<body>
+<div class="wrap" id="wrap">
   <header>
-    <h1 class="logo">Blank <span>Reel</span></h1>
+    <a class="logo" href="/" data-nav>Blank <span>Reel</span></a>
     <div class="meta">Daily <b id="dayNo">#–</b><br><span id="countdown">Next story in --</span></div>
   </header>
+  <nav id="nav"></nav>
   <main id="app"><section class="card"><p class="muted">Loading today's story…</p></section></main>
   <footer>
     <p id="mode"></p>
-    <div class="row"><button class="link" id="practice" type="button">Play another story</button><button class="link" id="reset" type="button">Start this story over</button></div>
+    <div class="row" id="gamefoot"><button class="link" id="practice" type="button">Play another story</button><button class="link" id="reset" type="button">Start this story over</button></div>
   </footer>
 </div>
 
 <script>
 const app = document.getElementById('app');
-const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fill = (str, a) => esc(str).replace(/\{(\d)\}/g, (_, i) => `<span class="w">${esc(a[i] || '___')}</span>`);
-const fillVp = (str, a) => esc(str).replace(/\{(\d)\}/g, (_, i) => `<em>${esc(a[i] || '___')}</em>`);
 const ls = {
   get(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } },
   set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} },
   del(k){ try { localStorage.removeItem(k); } catch(e){} }
 };
 
-let info, state, key, poll;
+let info, me, state, key, poll, words, wallTimer;
+let token = ls.get('blankreel-token');
 
-async function boot(storyIdx){
-  clearTimeout(poll);
-  const r = await fetch('/api/today' + (storyIdx != null ? '?story=' + storyIdx : ''));
-  info = await r.json();
+// ---------- server ----------
+async function api(path, opts = {}){
+  const r = await fetch(path, {
+    method: opts.method || (opts.body ? 'POST' : 'GET'),
+    headers: {'Content-Type': 'application/json', ...(token ? {'X-Player-Token': token} : {})},
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+  let j = {};
+  try { j = await r.json(); } catch(e){}
+  if (!r.ok){ const e = new Error(j.error || 'Something went wrong. Try again.'); e.status = r.status; throw e; }
+  return j;
+}
+async function ensurePlayer(){
+  if (token){
+    try { me = await api('/api/me'); return; } catch(e){ if (e.status !== 401) throw e; }
+  }
+  const p = await api('/api/players', {method: 'POST', body: {}});
+  token = p.token; ls.set('blankreel-token', token);
+  me = await api('/api/me');
+}
+async function refreshMe(){ me = await api('/api/me'); renderNav(); }
+
+// ---------- routing ----------
+function go(path){ history.pushState({}, '', path); route(); }
+window.addEventListener('popstate', route);
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[data-nav]');
+  if (a && !e.metaKey && !e.ctrlKey){ e.preventDefault(); go(a.getAttribute('href')); }
+});
+function route(){
+  clearTimeout(poll); clearTimeout(wallTimer);
+  const p = location.pathname;
+  const wide = p.startsWith('/room/');
+  document.getElementById('wrap').classList.toggle('wide', wide);
+  document.getElementById('gamefoot').hidden = p !== '/';
+  renderNav();
+  let m;
+  if (p === '/rooms') return renderRooms();
+  if (p === '/feed') return renderFeed(feedSort);
+  if ((m = p.match(/^\/room\/([a-f0-9]{10})$/))) return renderWall(m[1], null);
+  if ((m = p.match(/^\/r\/([A-Za-z0-9]{4,12})$/))) return renderJoin(m[1]);
+  return render();
+}
+function renderNav(){
+  if (!me) return;
+  const p = location.pathname, n = me.rooms.length;
+  document.getElementById('nav').innerHTML = `
+    <a href="/" data-nav class="${p === '/' ? 'on' : ''}">Today's story</a>
+    <a href="/feed" data-nav class="${p === '/feed' ? 'on' : ''}">Feed</a>
+    <a href="/rooms" data-nav class="${p === '/rooms' || p.startsWith('/room/') || p.startsWith('/r/') ? 'on' : ''}">Rooms${n ? ' (' + n + ')' : ''}</a>
+    <button type="button" class="me" id="rename">${me.player.name ? esc(me.player.name) + ' ✎' : 'Set your name'}</button>`;
+  document.getElementById('rename').onclick = () => nameCard(() => route(), 'Change your name');
+}
+
+// ---------- name ----------
+function nameCard(after, title){
+  app.innerHTML = `<section class="card">
+    <p class="eyebrow">${esc(title || 'One thing first')}</p>
+    <h2>What should your friends call you?</h2>
+    <form class="stack" id="nf">
+      <label for="nm" class="hint">Shows on room walls and your share page</label>
+      <input type="text" id="nm" maxlength="24" autocomplete="nickname" value="${esc(me.player.name)}">
+      <div class="row"><button class="btn" type="submit">Save name</button>${me.player.name ? '<button class="btn ghost" type="button" id="nc">Cancel</button>' : ''}</div>
+      <p class="err" id="ne" hidden></p>
+    </form></section>`;
+  const inp = document.getElementById('nm'); inp.focus();
+  const nc = document.getElementById('nc'); if (nc) nc.onclick = after;
+  document.getElementById('nf').onsubmit = async e => {
+    e.preventDefault();
+    try { await api('/api/me/name', {body: {name: inp.value}}); await refreshMe(); after(); }
+    catch(err){ const ne = document.getElementById('ne'); ne.textContent = err.message; ne.hidden = false; }
+  };
+}
+
+// ---------- today's game ----------
+async function loadStory(storyIdx){
+  info = await api('/api/today' + (storyIdx != null ? '?story=' + storyIdx : ''));
   document.getElementById('dayNo').textContent = '#' + info.day;
   document.getElementById('mode').textContent = info.mock
     ? 'Test mode: no Gemini key on the server, so trailers use plain color frames and no narration.'
     : 'Each trailer is AI-drawn and AI-narrated from your answers.';
   key = `blankreel-${info.day}-${info.storyIndex}`;
   state = ls.get(key) || {answers: [], step: 0, phase: 'intro', job: null};
-  render();
 }
 const save = () => ls.set(key, state);
 const S = () => info.story;
@@ -166,42 +266,60 @@ function render(){
 function renderIntro(){
   const t = S();
   app.innerHTML = `<section class="card">
-    <p class="eyebrow">${info.practice ? 'Bonus story' : "Today's story"}</p>
+    <p class="eyebrow">${info.practice ? 'Bonus story' : "Today's story · #" + info.day}</p>
     <h2>${esc(t.title)}</h2>
     <p class="muted">${esc(t.logline)} You won't see the script until you're done. Fill ${t.blanks.length} blanks, then we turn your answers into a narrated ${t.scenes.length}-shot trailer.</p>
-    <div class="facts"><span class="chip">${t.blanks.length} blanks</span><span class="chip">${t.scenes.length} shots</span><span class="chip">about 30 seconds</span></div>
+    <div class="facts"><span class="chip">${t.blanks.length} blanks</span><span class="chip">${t.scenes.length} shots</span><span class="chip">about 30 seconds</span>${info.practice ? '<span class="chip">bonus stories skip room walls</span>' : ''}</div>
     <div class="row"><button class="btn" id="go" type="button">Start filling blanks</button></div>
   </section>`;
   document.getElementById('go').onclick = () => { state.phase = 'fill'; save(); render(); };
 }
 
+function randomWord(kind){
+  if (kind === 'number') return String([2, 3, 4, 7, 9, 12, 17, 24, 40, 69, 99, 147, 300, 1000][Math.floor(Math.random() * 14)]);
+  const list = (words && words[kind]) || [];
+  return list.length ? list[Math.floor(Math.random() * list.length)] : '';
+}
+
 function renderFill(){
-  const t = S(), i = state.step, b = t.blanks[i];
+  const t = S(), i = state.step, b = t.blanks[i], last = i === t.blanks.length - 1;
   app.innerHTML = `<section class="card">
     <div class="dots">${t.blanks.map((_, k) => `<i class="${k <= i ? 'on' : ''}"></i>`).join('')}</div>
     <p class="eyebrow">Blank ${i+1} of ${t.blanks.length}</p>
-    <form id="f" style="display:flex;flex-direction:column;gap:14px">
+    <form id="f" class="stack">
       <label for="ans" class="prompt">${esc(b.label)}</label>
       <p class="hint">like: ${esc(b.hint)}</p>
-      <input type="text" id="ans" autocomplete="off" maxlength="40" value="${esc(state.answers[i] || '')}">
+      <div class="inputrow">
+        <input type="text" id="ans" autocomplete="off" maxlength="40" value="${esc(state.answers[i] || '')}">
+        <button class="dice" type="button" id="dice" title="Random ${esc(b.label.toLowerCase())}" aria-label="Pick a random ${esc(b.label.toLowerCase())}">🎲</button>
+      </div>
       <div class="row">
-        <button class="btn" id="next" type="submit">${i === t.blanks.length - 1 ? 'Reveal my story' : 'Next blank'}</button>
+        <button class="btn" id="next" type="submit">${last ? 'Reveal my story' : 'Next blank'}</button>
         ${i > 0 ? '<button class="btn ghost" id="back" type="button">Back</button>' : ''}
+        ${last ? '' : '<button class="link" id="rest" type="button">Fill the rest at random</button>'}
       </div>
     </form>
   </section>`;
   const inp = document.getElementById('ans'), nb = document.getElementById('next');
   const upd = () => nb.disabled = !inp.value.trim();
   inp.oninput = upd; upd(); inp.focus();
+  document.getElementById('dice').onclick = () => { const w = randomWord(b.kind); if (w){ inp.value = w; upd(); } inp.focus(); };
   document.getElementById('f').onsubmit = e => {
     e.preventDefault();
     if (!inp.value.trim()) return;
     state.answers[i] = inp.value.trim();
-    if (i === t.blanks.length - 1) state.phase = 'reveal'; else state.step++;
+    if (last) state.phase = 'reveal'; else state.step++;
     save(); render();
   };
   const back = document.getElementById('back');
   if (back) back.onclick = () => { state.answers[i] = inp.value.trim(); state.step--; save(); render(); };
+  const rest = document.getElementById('rest');
+  if (rest) rest.onclick = () => {
+    state.answers[i] = inp.value.trim() || randomWord(b.kind);
+    for (let k = i + 1; k < t.blanks.length; k++) if (!state.answers[k]) state.answers[k] = randomWord(t.blanks[k].kind);
+    if (state.answers.slice(0, t.blanks.length).every(Boolean)){ state.phase = 'reveal'; } else { state.step = i + 1; }
+    save(); render();
+  };
 }
 
 function renderReveal(){
@@ -212,50 +330,68 @@ function renderReveal(){
     <h2>${esc(t.title)}</h2>
     <div class="story">${t.scenes.map(s => `<p>${fill(s.line, a)}</p>`).join('')}</div>
     ${state.job ? '' : '<div class="row"><button class="link" id="edit" type="button">Change my answers</button></div>'}
+    <div id="score" hidden></div>
   </section>
-  <section class="card" id="trailer"></section>
-  <section class="card">
-    <details><summary>Shot list sent to the image model</summary>
-      <ol class="shots">${t.scenes.map((s, k) => `<li class="shot">
-        <span class="t"><b>Shot ${k+1}</b></span>
-        <div><p>${fill(s.line, a)}</p><p class="vp">${fillVp(s.shot, a)}</p></div>
-      </li>`).join('')}</ol>
-    </details>
-  </section>`;
+  <section class="card" id="trailer"></section>`;
+  if (!info.practice) showScore();
   const edit = document.getElementById('edit');
   if (edit) edit.onclick = () => { state.phase = 'fill'; state.step = 0; save(); render(); };
   renderTrailer();
 }
 
+async function showScore(){
+  let r;
+  try { r = await api('/api/plays', {body: {story: info.storyIndex, answers: state.answers}}); } catch(e){ return; }
+  const box = document.getElementById('score');
+  if (!box || !r.daily) return;
+  const sc = r.score;
+  box.className = 'score'; box.hidden = false;
+  box.innerHTML = `<p class="eyebrow">Originality</p>
+    <div class="big">${sc.total} <small>/ ${sc.max}</small></div>
+    <p class="hint">${sc.players === 1 ? "You're the first player today. Your score drops as others match your answers." : `Rare answers score more. ${sc.players} players so far today.`}</p>
+    <div class="chips">${sc.blanks.map(b => `<span class="${b.same === 1 && sc.players > 1 ? 'rare' : ''}">${esc(b.answer)} · ${b.same === 1 ? (sc.players > 1 ? 'only you' : '100') : b.same + ' of ' + sc.players}</span>`).join('')}</div>
+    <div class="row"><a class="link" href="/feed" data-nav>See today's most original</a></div>`;
+}
+
 function renderTrailer(){
   const box = document.getElementById('trailer');
   if (!box) return;
-  if (!state.job){
-    const code = ls.get('blankreel-code') || '';
+  if (state.job){
+    box.innerHTML = `<p class="eyebrow">Your trailer</p><h3 id="tstep">Checking…</h3><div class="bar"><b id="tbar"></b></div><p class="hint" id="tpos"></p>`;
+    return check();
+  }
+  if (!me.canMake){
     box.innerHTML = `<p class="eyebrow">Your trailer</p>
-      <h3>Turn this into a video</h3>
-      <p class="muted">Takes a minute or two. You'll get a link to text to your friends.</p>
-      ${info.needsCode ? `<label for="code" class="hint">Crew code</label><input type="text" id="code" autocomplete="off" value="${esc(code)}">` : ''}
-      <div class="row"><button class="btn" id="make" type="button">Make my trailer</button></div>
-      <p class="err" id="err" hidden></p>`;
-    document.getElementById('make').onclick = make;
+      <h3>Got an invite code?</h3>
+      <p class="muted">Trailers are invite-only while we test. Enter your code once and you're set on this device.</p>
+      <form class="stack" id="cf"><label for="code" class="hint">Invite code</label>
+      <input type="text" id="code" class="code" autocomplete="off" maxlength="24">
+      <div class="row"><button class="btn" type="submit">Unlock trailers</button></div>
+      <p class="err" id="err" hidden></p></form>`;
+    document.getElementById('cf').onsubmit = async e => {
+      e.preventDefault();
+      const err = document.getElementById('err');
+      try { await api('/api/redeem', {body: {code: document.getElementById('code').value}}); await refreshMe(); renderTrailer(); }
+      catch(x){ err.textContent = x.message; err.hidden = false; }
+    };
     return;
   }
-  box.innerHTML = `<p class="eyebrow">Your trailer</p><h3 id="tstep">Checking…</h3><div class="bar"><b id="tbar"></b></div><p class="hint" id="tpos"></p>`;
-  check();
+  const rooms = me.rooms.map(r => esc(r.name)).join(', ');
+  box.innerHTML = `<p class="eyebrow">Your trailer</p>
+    <h3>Turn this into a video</h3>
+    <p class="muted">Takes a minute or two. ${!info.practice && rooms ? 'It goes on the wall in ' + rooms + '.' : "You'll get a link to text to your friends."}</p>
+    <p class="hint">${me.usedToday} of ${me.playerLimit} trailers used today</p>
+    <div class="row"><button class="btn" id="make" type="button">Make my trailer</button></div>
+    <p class="err" id="err" hidden></p>`;
+  document.getElementById('make').onclick = make;
 }
 
 async function make(){
   const btn = document.getElementById('make'), err = document.getElementById('err');
-  const codeEl = document.getElementById('code'), code = codeEl ? codeEl.value.trim() : '';
   btn.disabled = true; err.hidden = true;
   try {
-    const r = await fetch('/api/trailers', {method: 'POST', headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({story: info.storyIndex, answers: state.answers, code})});
-    const j = await r.json();
-    if (!r.ok) throw new Error(j.error || 'Something went wrong.');
-    if (code) ls.set('blankreel-code', code);
-    state.job = j.id; save(); render();
+    const j = await api('/api/trailers', {body: {story: info.storyIndex, answers: state.answers}});
+    state.job = j.id; save(); refreshMe().catch(() => {}); render();
   } catch(e){
     err.textContent = e.message; err.hidden = false; btn.disabled = false;
   }
@@ -264,50 +400,312 @@ async function make(){
 async function check(){
   clearTimeout(poll);
   let j;
-  try {
-    const r = await fetch('/api/trailers/' + state.job);
-    j = await r.json();
-    if (!r.ok) throw new Error(j.error);
-  } catch(e){
-    state.job = null; save(); return renderTrailer();
-  }
+  try { j = await api('/api/trailers/' + state.job); }
+  catch(e){ if (e.status === 404){ state.job = null; save(); return renderTrailer(); } poll = setTimeout(check, 4000); return; }
   const box = document.getElementById('trailer');
   if (!box) return;
   if (j.status === 'done') return showDone(j);
   if (j.status === 'failed'){
     box.innerHTML = `<p class="eyebrow">Your trailer</p><h3>That one didn't render</h3><p class="err">${esc(j.error)}</p>
+      <p class="hint">Failed trailers don't count against your daily limit.</p>
       <div class="row"><button class="btn" id="retry" type="button">Try again</button></div>`;
     document.getElementById('retry').onclick = () => { state.job = null; save(); render(); };
     return;
   }
-  document.getElementById('tstep').textContent = j.status === 'queued' ? 'Waiting in line' : j.step + '…';
+  document.getElementById('tstep').textContent = j.status === 'queued' ? 'Waiting in line' : (j.step || 'Starting') + '…';
   document.getElementById('tbar').style.width = (j.total ? Math.round(100 * j.done / j.total) : 3) + '%';
-  document.getElementById('tpos').textContent = j.position ? `${j.position} ahead of you, counting yours` : '';
+  document.getElementById('tpos').textContent = j.position ? `${j.position} in line, counting yours` : '';
   poll = setTimeout(check, 2000);
 }
 
 function showDone(j){
   const box = document.getElementById('trailer');
   const link = location.origin + '/t/' + j.id;
+  const rooms = j.daily ? me.rooms : [];
   box.innerHTML = `<p class="eyebrow">Your trailer</p>
     <video src="/v/${j.id}.mp4" poster="/v/${j.id}.jpg" controls playsinline></video>
+    ${rooms.length ? `<p class="ok">On the wall in ${rooms.map(r => `<a href="/room/${r.id}" data-nav>${esc(r.name)}</a>`).join(', ')}</p>`
+      : (j.daily ? `<p class="hint">Want your friends' trailers in one place? <a href="/rooms" data-nav>Make a room</a>.</p>` : '')}
     <h3>Send it to the group chat</h3>
     <input type="text" id="link" readonly value="${esc(link)}">
     <div class="row"><button class="btn" id="copy" type="button">Copy link</button>
       <a class="link" href="${esc(link)}" target="_blank" rel="noopener">Open share page</a>
-      <span class="ok" id="copied" hidden>Copied</span></div>`;
-  document.getElementById('copy').onclick = () => {
-    const el = document.getElementById('link'), ok = document.getElementById('copied');
+      <span class="ok" id="copied" hidden>Copied</span></div>
+    <div class="pubstate" id="pub"></div>`;
+  copyButton('copy', 'link', 'copied');
+  renderPublish(j);
+}
+
+function renderPublish(j){
+  const box = document.getElementById('pub');
+  if (!box) return;
+  const act = async (path, after) => {
+    try { const r = await api('/api/trailers/' + j.id + '/' + path, {method: 'POST', body: {}}); j.public = r.public; renderPublish(j); }
+    catch(e){ const er = document.getElementById('puberr'); if (er){ er.textContent = e.message; er.hidden = false; } }
+  };
+  if (j.hidden){ box.innerHTML = `<p class="hint">This trailer was taken down, so it's off the feed and its link no longer works.</p>`; return; }
+  if (j.public === 'approved'){
+    box.innerHTML = `<p class="ok">On the public feed</p><div class="row"><a class="btn ghost small" href="/feed" data-nav>See the feed</a><button class="link" id="unpub" type="button">Remove from feed</button></div><p class="err" id="puberr" hidden></p>`;
+  } else if (j.public === 'pending'){
+    box.innerHTML = `<h3>Waiting for review</h3><p class="hint">It shows up on the feed once it's approved.</p><div class="row"><button class="link" id="unpub" type="button">Cancel</button></div><p class="err" id="puberr" hidden></p>`;
+  } else if (j.public === 'rejected'){
+    box.innerHTML = `<p class="hint">This one wasn't approved for the public feed. Your link still works for friends.</p>`;
+  } else {
+    box.innerHTML = `<h3>Show the world</h3><p class="hint">Publish to the public feed, where anyone can watch it and give it a 👍 or 👎. We check every trailer before it goes up.</p>
+      <div class="row"><button class="btn ghost" id="dopub" type="button">Publish to the feed</button></div><p class="err" id="puberr" hidden></p>`;
+  }
+  const un = document.getElementById('unpub'); if (un) un.onclick = () => act('unpublish');
+  const dp = document.getElementById('dopub');
+  if (dp) dp.onclick = () => {
+    if (!me.player.name) return nameCard(() => { route(); }, 'Before you publish');
+    act('publish');
+  };
+}
+
+function copyButton(btnId, inputId, okId){
+  document.getElementById(btnId).onclick = () => {
+    const el = document.getElementById(inputId), ok = document.getElementById(okId);
     const done = () => { ok.hidden = false; setTimeout(() => ok.hidden = true, 1800); };
     const sel = () => { el.focus(); el.select(); };
     try { navigator.clipboard.writeText(el.value).then(done, sel); } catch(e){ sel(); }
   };
 }
 
-document.getElementById('practice').onclick = () => boot((info.storyIndex + 1) % info.storyCount);
+// ---------- rooms ----------
+async function renderRooms(){
+  if (!me.player.name) return nameCard(renderRooms, 'Before you make or join a room');
+  await refreshMe().catch(() => {});
+  const devLink = location.origin + '/?k=' + token;
+  app.innerHTML = `
+  <section class="card">
+    <p class="eyebrow">Your rooms</p>
+    ${me.rooms.length ? `<ul class="roomlist">${me.rooms.map(r => `<li><a href="/room/${r.id}" data-nav>${esc(r.name)}</a><span class="chip">${r.members} ${r.members === 1 ? 'person' : 'people'}</span></li>`).join('')}</ul>`
+      : `<p class="muted">A room is a private wall for your group. Everyone's trailer for the day shows up in one place, and you vote on the best one.</p>`}
+  </section>
+  <section class="card">
+    <h3>Make a room</h3>
+    <form class="stack" id="cr"><label for="rn" class="hint">Room name</label>
+      <input type="text" id="rn" maxlength="32" placeholder="The Boys">
+      <div class="row"><button class="btn" type="submit">Create room</button></div><p class="err" id="cre" hidden></p></form>
+  </section>
+  <section class="card">
+    <h3>Join a room</h3>
+    <form class="stack" id="jr"><label for="jc" class="hint">Room code from your friend's invite link</label>
+      <input type="text" id="jc" class="code" maxlength="12" placeholder="DS9BC4">
+      <div class="row"><button class="btn ghost" type="submit">Join</button></div><p class="err" id="jre" hidden></p></form>
+  </section>
+  <details class="card"><summary>Play on another device</summary>
+    <p class="muted">Open this link on your other phone or computer to be the same player there. Don't share it: anyone with it can play as you.</p>
+    <input type="text" id="dev" readonly value="${esc(devLink)}">
+    <div class="row"><button class="btn ghost small" id="devcopy" type="button">Copy link</button><span class="ok" id="devok" hidden>Copied</span></div>
+  </details>`;
+  copyButton('devcopy', 'dev', 'devok');
+  document.getElementById('cr').onsubmit = async e => {
+    e.preventDefault();
+    try { const j = await api('/api/rooms', {body: {name: document.getElementById('rn').value}}); await refreshMe(); go('/room/' + j.room.id); }
+    catch(x){ const el = document.getElementById('cre'); el.textContent = x.message; el.hidden = false; }
+  };
+  document.getElementById('jr').onsubmit = async e => {
+    e.preventDefault();
+    try { const j = await api('/api/rooms/join', {body: {code: document.getElementById('jc').value}}); await refreshMe(); go('/room/' + j.room.id); }
+    catch(x){ const el = document.getElementById('jre'); el.textContent = x.message; el.hidden = false; }
+  };
+}
+
+async function renderJoin(code){
+  if (!me.player.name) return nameCard(() => renderJoin(code), "You've been invited to a room");
+  try {
+    const j = await api('/api/rooms/join', {body: {code}});
+    await refreshMe();
+    history.replaceState({}, '', '/room/' + j.room.id); route();
+  } catch(e){
+    app.innerHTML = `<section class="card"><h3>Couldn't join</h3><p class="err">${esc(e.message)}</p><div class="row"><a class="btn ghost" href="/rooms" data-nav>Go to rooms</a></div></section>`;
+  }
+}
+
+async function renderWall(id, day){
+  clearTimeout(wallTimer);
+  let w;
+  try { w = await api('/api/rooms/' + id + (day ? '?day=' + day : '')); }
+  catch(e){
+    app.innerHTML = `<section class="card"><h3>Couldn't open that room</h3><p class="err">${esc(e.message)}</p><div class="row"><a class="btn ghost" href="/rooms" data-nav>Your rooms</a></div></section>`;
+    return;
+  }
+  if (location.pathname !== '/room/' + id) return; // navigated away while loading
+  const invite = location.origin + '/r/' + w.room.joinCode;
+  const isToday = w.day === w.today;
+  const top = Math.max(0, ...w.entries.map(e => e.votes));
+  const waiting = w.members.filter(m => !m.status);
+  const myEntry = w.entries.find(e => e.playerId === w.me);
+  const canVote = !isToday || !!myEntry;
+  const board = w.leaderboard;
+  app.innerHTML = `
+  <section class="card">
+    <div class="row" style="justify-content:space-between">
+      <div><p class="eyebrow">Room · ${w.members.length} ${w.members.length === 1 ? 'person' : 'people'}</p><h2>${esc(w.room.name)}</h2></div>
+    </div>
+    <details><summary>Invite friends</summary>
+      <div class="stack" style="display:flex;flex-direction:column;gap:10px">
+        <input type="text" id="inv" readonly value="${esc(invite)}">
+        <div class="row"><button class="btn small" id="invcopy" type="button">Copy invite link</button><span class="hint">Room code ${esc(w.room.joinCode)}</span><span class="ok" id="invok" hidden>Copied</span></div>
+      </div>
+    </details>
+  </section>
+
+  <section class="card">
+    <div class="daynav">
+      <button class="btn ghost small" id="prev" type="button" ${w.day <= 1 ? 'disabled' : ''} aria-label="Previous day">‹</button>
+      <div class="mid"><span class="hint">${esc(w.date)} · #${w.day}${isToday ? ' · today' : ''}</span><b>${esc(w.story.title)}</b></div>
+      <button class="btn ghost small" id="next" type="button" ${isToday ? 'disabled' : ''} aria-label="Next day">›</button>
+    </div>
+    ${w.locked ? `<div class="note">Play today's story to see everyone's trailers. No spoilers until you've filled in your own blanks.</div>
+      <div class="row"><a class="btn" href="/" data-nav>Play today's story</a></div>` : ''}
+    <ul class="people">${w.members.map(m => `<li class="${m.status === 'done' ? 'done' : ''}">${esc(m.name || 'No name')}${m.status === 'done' ? ' ✓' : m.status ? ' · rendering' : ' · not yet'}</li>`).join('')}</ul>
+  </section>
+
+  ${w.entries.length ? `<div class="entries">${w.entries.map(e => {
+    const mine = e.playerId === w.me, voted = w.myVote === e.id;
+    return `<section class="card entry">
+      <div class="who"><b>${esc(e.player || 'No name')}${mine ? ' (you)' : ''}</b>${top > 0 && e.votes === top ? '<span class="crown">♛ top pick</span>' : ''}</div>
+      ${e.status === 'done' ? `<video src="/v/${e.id}.mp4" poster="/v/${e.id}.jpg" controls playsinline preload="none"></video>` : `<div class="placeholder">Rendering…</div>`}
+      <details><summary>Read their story</summary><div class="story">${w.story.scenes.map(s => `<p>${fill(s.line, e.answers)}</p>`).join('')}</div></details>
+      <div class="row" style="justify-content:space-between">
+        <span class="hint">${e.votes} ${e.votes === 1 ? 'vote' : 'votes'}</span>
+        ${mine ? '<span class="hint">no voting for yourself</span>'
+          : `<button class="vote ${voted ? 'mine' : ''}" type="button" data-vote="${e.id}" ${e.status !== 'done' || !canVote ? 'disabled' : ''}>${voted ? '😂 Your pick' : '😂 Vote'}</button>`}
+      </div>
+    </section>`; }).join('')}</div>` : (!w.locked ? `<section class="card"><p class="muted">No trailers on this day yet${isToday ? '. Be the first.' : '.'}</p></section>` : '')}
+
+  ${waiting.length && !w.locked ? `<p class="hint">Still waiting on: ${waiting.map(m => esc(m.name || 'No name')).join(', ')}</p>` : ''}
+
+  <section class="card">
+    <p class="eyebrow">${esc(w.month)} leaderboard</p>
+    ${board.length ? `<table class="board"><thead><tr><th>Player</th><th style="text-align:right">Votes</th><th style="text-align:right">Top picks</th></tr></thead>
+      <tbody>${board.map(s => `<tr><td>${esc(s.name || 'No name')}</td><td class="n">${s.votes}</td><td class="n">${s.crowns}</td></tr>`).join('')}</tbody></table>`
+      : `<p class="muted">No votes yet this month. Each person gets one vote a day, and the most-voted trailer is the day's top pick.</p>`}
+  </section>
+  <div class="row"><button class="link" id="leave" type="button">Leave this room</button><span class="err" id="leaveq" hidden></span></div>`;
+
+  copyButton('invcopy', 'inv', 'invok');
+  document.getElementById('prev').onclick = () => renderWall(id, w.day - 1);
+  document.getElementById('next').onclick = () => renderWall(id, w.day + 1 >= w.today ? null : w.day + 1);
+  document.querySelectorAll('[data-vote]').forEach(b => b.onclick = async () => {
+    const tid = b.dataset.vote;
+    b.disabled = true;
+    try { await api('/api/rooms/' + id + '/vote', {body: {day: w.day, trailer: w.myVote === tid ? '' : tid}}); }
+    catch(e){ alertInline(e.message); }
+    renderWall(id, isToday ? null : w.day);
+  });
+  let leaveArmed = false;
+  document.getElementById('leave').onclick = async () => {
+    const q = document.getElementById('leaveq');
+    if (!leaveArmed){ leaveArmed = true; q.textContent = 'Tap again to leave.'; q.hidden = false; return; }
+    await api('/api/rooms/' + id + '/leave', {method: 'POST', body: {}});
+    await refreshMe(); go('/rooms');
+  };
+  // Keep today's wall fresh while friends are playing.
+  if (isToday) wallTimer = setTimeout(() => { if (location.pathname === '/room/' + id) refreshWall(id); }, 20000);
+}
+function refreshWall(id){
+  const playing = [...document.querySelectorAll('video')].some(v => !v.paused);
+  const open = [...document.querySelectorAll('details[open]')].length;
+  if (playing || open){ wallTimer = setTimeout(() => refreshWall(id), 20000); return; }
+  renderWall(id, null);
+}
+function alertInline(msg){
+  const el = document.createElement('p'); el.className = 'err'; el.textContent = msg;
+  app.prepend(el); setTimeout(() => el.remove(), 4000);
+}
+
+// ---------- public feed ----------
+let feedSort = 'today';
+function feedCard(t, w, potd){
+  const mine = t.playerId === w.me, link = location.origin + '/t/' + t.id;
+  return `<section class="card ${potd ? 'potd' : ''}" data-card="${t.id}">
+    ${potd ? '<p class="eyebrow">🎬 Trailer of the Day</p>' : ''}
+    <div><h3>${esc(t.title)}</h3><p class="byline">by ${esc(t.player || 'Anonymous')} · #${t.day}</p></div>
+    <video src="/v/${t.id}.mp4" poster="/v/${t.id}.jpg" controls playsinline preload="none"></video>
+    <details><summary>Read the story</summary><div class="story">${(t.template || []).map(l => `<p>${fill(l, t.answers)}</p>`).join('')}</div></details>
+    <div class="reacts">
+      <button class="react up ${t.myReaction === 1 ? 'on' : ''}" type="button" data-react="1" data-id="${t.id}" ${mine ? 'disabled title="Your trailer"' : ''} aria-label="Like">👍 <span>${t.likes}</span></button>
+      <button class="react down ${t.myReaction === -1 ? 'on' : ''}" type="button" data-react="-1" data-id="${t.id}" ${mine ? 'disabled title="Your trailer"' : ''} aria-label="Dislike">👎 <span>${t.dislikes}</span></button>
+      <span class="spacer"></span>
+      <button class="link" type="button" data-copy="${esc(link)}">Copy link</button>
+      ${mine ? '<span class="hint">yours</span>' : `<button class="link" type="button" data-report="${t.id}">Report</button>`}
+    </div>
+  </section>`;
+}
+
+async function renderFeed(sort){
+  feedSort = sort;
+  let w;
+  try { w = await api('/api/feed?sort=' + sort); }
+  catch(e){ app.innerHTML = `<section class="card"><p class="err">${esc(e.message)}</p></section>`; return; }
+  if (location.pathname !== '/feed') return;
+  const items = w.items.filter(t => !w.featured || t.id !== w.featured.id);
+  const empty = {today: "Nothing on the feed from today's story yet. Make a trailer and hit Publish.", week: 'Nothing published this week yet.', new: 'Nothing published yet.'}[sort];
+  app.innerHTML = `
+  <section class="card">
+    <p class="eyebrow">Public feed</p>
+    <h2>Everybody's trailers</h2>
+    <div class="tabs" role="tablist">
+      ${[['today', "Today's best"], ['week', 'This week'], ['new', 'Newest']].map(([k, l]) => `<button type="button" role="tab" aria-selected="${k === sort}" class="${k === sort ? 'on' : ''}" data-sort="${k}">${l}</button>`).join('')}
+    </div>
+  </section>
+  ${w.featured ? feedCard(w.featured, w, true) : ''}
+  ${items.length ? items.map(t => feedCard(t, w, false)).join('') : (w.featured ? '' : `<section class="card"><p class="muted">${empty}</p></section>`)}
+  <section class="card">
+    <p class="eyebrow">Most original today · ${esc(w.storyTitle)}</p>
+    ${w.original.length ? `<ol class="ranks">${w.original.map(r => `<li class="${r.me ? 'me' : ''}"><span>${esc(r.name)}${r.me ? ' (you)' : ''}</span><b>${r.score}</b></li>`).join('')}</ol>
+      <p class="hint">${w.players} ${w.players === 1 ? 'player' : 'players'} today. Each blank scores up to 100; answers nobody else typed score the most.</p>`
+      : `<p class="muted">Nobody has played today's story yet. Rare answers score the most.</p>`}
+    <div class="row"><a class="btn ghost small" href="/" data-nav>Play today's story</a></div>
+  </section>`;
+  document.querySelectorAll('[data-sort]').forEach(b => b.onclick = () => renderFeed(b.dataset.sort));
+  document.querySelectorAll('[data-react]').forEach(b => b.onclick = async () => {
+    const id = b.dataset.id, v = Number(b.dataset.react);
+    const card = document.querySelector(`[data-card="${id}"]`);
+    const cur = card.querySelector('.react.on');
+    const next = cur && Number(cur.dataset.react) === v ? 0 : v;
+    try {
+      const r = await api('/api/trailers/' + id + '/react', {body: {value: next}});
+      document.querySelectorAll(`[data-card="${id}"]`).forEach(c => {
+        const up = c.querySelector('.react.up'), down = c.querySelector('.react.down');
+        up.querySelector('span').textContent = r.likes; down.querySelector('span').textContent = r.dislikes;
+        up.classList.toggle('on', r.myReaction === 1); down.classList.toggle('on', r.myReaction === -1);
+      });
+    } catch(e){ alertInline(e.message); }
+  });
+  document.querySelectorAll('[data-copy]').forEach(b => b.onclick = () => {
+    const done = () => { b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy link', 1600); };
+    try { navigator.clipboard.writeText(b.dataset.copy).then(done, () => alertInline(b.dataset.copy)); } catch(e){ alertInline(b.dataset.copy); }
+  });
+  document.querySelectorAll('[data-report]').forEach(b => {
+    let armed = false;
+    b.onclick = async () => {
+      if (!armed){ armed = true; b.textContent = 'Tap again to report'; return; }
+      try { await api('/api/trailers/' + b.dataset.report + '/report', {method: 'POST', body: {}}); b.outerHTML = '<span class="hint">Reported. Thanks.</span>'; }
+      catch(e){ alertInline(e.message); }
+    };
+  });
+}
+
+// ---------- boot ----------
+document.getElementById('practice').onclick = async () => { await loadStory((info.storyIndex + 1) % info.storyCount); render(); };
 document.getElementById('reset').onclick = () => { ls.del(key); state = {answers: [], step: 0, phase: 'intro', job: null}; clearTimeout(poll); render(); };
 
-boot().catch(() => { app.innerHTML = '<section class="card"><p class="err">Couldn\'t reach the Blank Reel server.</p></section>'; });
+(async function boot(){
+  try {
+    const q = new URLSearchParams(location.search);
+    if (/^[a-f0-9]{32}$/.test(q.get('k') || '')){ token = q.get('k'); ls.set('blankreel-token', token); history.replaceState({}, '', location.pathname); }
+    await ensurePlayer();
+    await loadStory();
+    fetch('/api/words').then(r => r.json()).then(w => words = w).catch(() => {});
+    route();
+  } catch(e){
+    app.innerHTML = '<section class="card"><p class="err">Couldn\'t reach the Blank Reel server. Reload to try again.</p></section>';
+  }
+})();
 </script>
 </body>
 </html>
