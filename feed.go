@@ -208,7 +208,7 @@ func (s *server) recordPlay(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	day := s.dayNo()
-	if in.Story != s.storyFor(day) || len(in.Answers) != len(s.stories[in.Story].Blanks) {
+	if in.Story != s.storyFor(day) || len(in.Answers) != len(s.mustStory(in.Story).Blanks) {
 		writeJSON(w, 200, map[string]any{"daily": false})
 		return
 	}
@@ -303,12 +303,12 @@ func (s *server) feedHandler(w http.ResponseWriter, r *http.Request) {
 		board = top
 	}
 	writeJSON(w, 200, map[string]any{"sort": sortBy, "items": items, "featured": featured, "me": viewer,
-		"original": board, "players": players, "storyTitle": s.stories[s.storyFor(s.dayNo())].Title})
+		"original": board, "players": players, "storyTitle": s.mustStory(s.storyFor(s.dayNo())).Title})
 }
 
 func (s *server) addTemplate(t *Trailer) {
-	if t.Story < len(s.stories) {
-		for _, sc := range s.stories[t.Story].Scenes {
+	if st, ok := s.storyByID(t.Story); ok {
+		for _, sc := range st.Scenes {
 			t.Template = append(t.Template, sc.Line)
 		}
 	}

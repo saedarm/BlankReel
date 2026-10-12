@@ -78,6 +78,13 @@ CREATE TABLE IF NOT EXISTS plays (
   created INTEGER NOT NULL,
   PRIMARY KEY (player_id, day, story)
 );
+CREATE TABLE IF NOT EXISTS daily_stories (
+  day INTEGER PRIMARY KEY,
+  story_id INTEGER NOT NULL,
+  story TEXT,
+  source TEXT NOT NULL,
+  created INTEGER NOT NULL
+);
 CREATE TABLE IF NOT EXISTS votes (
   room_id TEXT NOT NULL,
   day INTEGER NOT NULL,

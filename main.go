@@ -65,6 +65,8 @@ type server struct {
 	dailyLimit  int
 	playerLimit int
 	review      bool     // published trailers wait for approval
+	kinds       []string // word-list categories a blank can use
+	days        dailyStore
 	blocklist   []string // answers containing these always wait for approval
 	launch      time.Time
 
@@ -91,6 +93,10 @@ func main() {
 	if err := json.Unmarshal(wordsJSON, &words); err != nil {
 		log.Fatalf("words.json: %v", err)
 	}
+	for k := range words {
+		s.kinds = append(s.kinds, k)
+	}
+	sort.Strings(s.kinds)
 	for i, st := range s.stories {
 		for _, b := range st.Blanks {
 			if b.Kind != "number" && len(words[b.Kind]) == 0 {
@@ -108,6 +114,7 @@ func main() {
 			Key:        key,
 			ImageModel: env("BLANKREEL_IMAGE_MODEL", "gemini-3.1-flash-lite-image"),
 			TTSModel:   env("BLANKREEL_TTS_MODEL", "gemini-3.8-flash-lite-tts"),
+			TextModel:  env("BLANKREEL_TEXT_MODEL", "gemini-3.8-flash"),
 			Voice:      env("BLANKREEL_VOICE", "Charon"),
 			HTTP:       &http.Client{Timeout: 3 * time.Minute},
 		}
@@ -125,7 +132,9 @@ func main() {
 	if s.adminKey == "" {
 		log.Printf("No BLANKREEL_ADMIN_KEY: admin page is off")
 	}
+	s.days.cache = map[int]dailyRow{}
 	go s.worker()
+	go s.storyWriter()
 
 	mux := http.NewServeMux()
 	page := func(w http.ResponseWriter, r *http.Request) {
@@ -185,11 +194,6 @@ func (s *server) dayOf(t time.Time) int { return int(midnight(t).Sub(s.launch).H
 
 func (s *server) dateOf(day int) time.Time { return s.launch.AddDate(0, 0, day-1) }
 
-func (s *server) storyFor(day int) int {
-	n := len(s.stories)
-	return ((day-1)%n + n) % n
-}
-
 // monthDays is the first and last day number of the calendar month a day falls in.
 func (s *server) monthDays(day int) (int, int) {
 	d := s.dateOf(day)
@@ -215,7 +219,7 @@ func (s *server) worker() {
 		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 		err := os.MkdirAll(dir, 0o755)
 		if err == nil {
-			err = renderTrailer(ctx, s.gemini, dir, s.stories[t.Story], t.Answers, t.Day, func(step string, done, total int) {
+			err = renderTrailer(ctx, s.gemini, dir, s.mustStory(t.Story), t.Answers, t.Day, func(step string, done, total int) {
 				s.mu.Lock()
 				job.Step, job.Done, job.Total = step, done, total
 				s.mu.Unlock()

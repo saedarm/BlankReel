@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"html/template"
 	"log"
@@ -58,6 +59,16 @@ a{color:var(--cobalt)}
 <div><b>{{.MonthSpend}}</b><span>est. AI spend, 30 days</span></div>
 </div>{{if .Mock}}<p class="muted">Test mode: no Gemini key, so nothing is actually spent.</p>{{end}}</section>
 
+<section><h2>Stories</h2>
+<table><tr><th></th><th>Story</th><th>Source</th><th></th></tr>
+{{range .Days}}<tr><td>{{.When}}</td><td><b>{{.Story.Title}}</b> <span class="muted">{{.Story.Logline}}</span>
+<details><summary class="muted">Read it</summary><ol>{{range .Story.Scenes}}<li>{{.Line}}</li>{{end}}</ol>
+<p class="muted">Blanks: {{range $i, $b := .Story.Blanks}}{{if $i}}, {{end}}{{$i}} {{$b.Label}}{{end}}</p></details></td>
+<td>{{if eq .Source "ai"}}AI-written{{else if .Planned}}backup list (AI writes it ahead of time){{else}}backup list{{end}}</td>
+<td>{{if .Tomorrow}}<form method="post" action="/admin/rewrite"><input type="hidden" name="key" value="{{$.Key}}"><button {{if $.Mock}}disabled title="Needs GEMINI_API_KEY"{{end}}>Write a new one</button></form>{{end}}</td></tr>{{end}}
+</table>
+<p class="muted">Tomorrow's story is written ahead of time and locks in at midnight. Takes about 20 seconds to rewrite.</p></section>
+
 <section><h2>Invite codes</h2>
 <p class="muted">Anyone who enters an active code becomes a beta tester: no paywall, {{.PlayerLimit}} trailers a day.{{if .Master}} The BLANKREEL_CODE secret also works as a code.{{end}}</p>
 <form method="post" action="/admin/invite"><input type="hidden" name="key" value="{{.Key}}">
@@ -114,13 +125,26 @@ func (s *server) adminPage(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	today, _ := s.store.countSince("", midnight(time.Now()))
+	todayCount, _ := s.store.countSince("", midnight(time.Now()))
 	month, _ := s.store.countSince("", time.Now().AddDate(0, 0, -30))
 	invites, _ := s.store.invites()
 	trailers, _ := s.store.recentTrailers(60)
 	rooms, _ := s.store.rooms()
 	pending, _ := s.store.feed("", `t.public='pending' AND t.hidden=0 ORDER BY t.published LIMIT 100`)
 	live, _ := s.store.feed("", `t.public='approved' ORDER BY t.published DESC LIMIT 40`)
+	type dayInfo struct {
+		When              string
+		Story             Story
+		Source            string
+		Tomorrow, Planned bool
+	}
+	today := s.dayNo()
+	td, tm := s.daily(today), s.daily(today+1)
+	_, tmStored := s.store.getDaily(today + 1)
+	days := []dayInfo{
+		{When: fmt.Sprintf("Today #%d", today), Story: s.mustStory(td.StoryID), Source: td.Source},
+		{When: fmt.Sprintf("Tomorrow #%d", today+1), Story: s.mustStory(tm.StoryID), Source: tm.Source, Tomorrow: true, Planned: !tmStored && s.gemini != nil},
+	}
 	rate := costPerTrailer
 	if s.gemini == nil {
 		rate = 0
@@ -129,10 +153,10 @@ func (s *server) adminPage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Header().Set("Cache-Control", "no-store")
 	err := adminTmpl.Execute(w, map[string]any{
-		"Key": r.FormValue("key"), "Flash": r.FormValue("flash"), "Today": today, "Limit": s.dailyLimit,
-		"Spend": money(today), "Month": month, "MonthSpend": money(month), "Mock": s.gemini == nil,
+		"Key": r.FormValue("key"), "Flash": r.FormValue("flash"), "Today": todayCount, "Limit": s.dailyLimit,
+		"Spend": money(todayCount), "Month": month, "MonthSpend": money(month), "Mock": s.gemini == nil,
 		"Invites": invites, "Trailers": trailers, "Rooms": rooms, "PlayerLimit": s.playerLimit, "Master": s.masterCode != "",
-		"Pending": pending, "Live": live, "Review": s.review,
+		"Pending": pending, "Live": live, "Review": s.review, "Days": days,
 	})
 	if err != nil {
 		log.Printf("admin page: %v", err)
@@ -177,6 +201,15 @@ func (s *server) adminAction(w http.ResponseWriter, r *http.Request) {
 			state := map[string]string{"approve": "approved", "reject": "rejected"}[r.PathValue("action")]
 			s.store.setPublic(id, state, t.Published, t.Flagged)
 			flash = "Trailer " + id + " " + state
+		}
+	case "rewrite":
+		ctx, cancel := context.WithTimeout(r.Context(), 3*time.Minute)
+		err := s.rewriteTomorrow(ctx)
+		cancel()
+		if err != nil {
+			flash = "Couldn't write a new story: " + err.Error()
+		} else {
+			flash = "Wrote a new story for tomorrow"
 		}
 	case "feature":
 		id := r.FormValue("id")

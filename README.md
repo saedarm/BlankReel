@@ -88,6 +88,7 @@ Run one machine only (the volume makes that the default). The render queue lives
 | `BLANKREEL_VOICE` | Charon | Narrator voice (Puck, Kore, Fenrir, Zephyr…) |
 | `BLANKREEL_IMAGE_MODEL` | gemini-3.1-flash-lite-image | Swap to `gemini-nano-banana-2.1` for nicer, pricier images |
 | `BLANKREEL_TTS_MODEL` | gemini-3.8-flash-lite-tts | Narration model |
+| `BLANKREEL_TEXT_MODEL` | gemini-3.8-flash | Writes the daily story |
 | `BLANKREEL_LAUNCH` | 2026-10-01 | Day #1 of the daily count |
 | `PORT` | 8080 | |
 | `DATA_DIR` | data | Where trailers and the `blankreel.db` database live |
@@ -96,20 +97,29 @@ Run one machine only (the volume makes that the default). The render queue lives
 
 Six images plus six short narration lines per trailer. At current Gemini prices that's roughly a quarter or less per trailer, so the default daily limit of 40 caps you around $10 a day. Check your usage in AI Studio after the first few runs to confirm.
 
-## Adding stories
+## Daily stories
 
-Stories live in `stories.json`, compiled into the binary. Each one has `blanks` (label, example hint, and `kind`, which picks the 🎲 word list in `words.json`) and six `scenes`. In each scene, `line` is what the narrator reads and the caption shows, and `shot` is the image prompt. `{0}`, `{1}`… are the answers by blank number. The daily story rotates through the list.
+Every day gets a new story. With a Gemini key, the server writes tomorrow's story ahead of time using `gemini-3.8-flash`, for well under a cent each. It checks every story before using it: 6 scenes, every blank used, valid slots, known word-list kinds, and nothing that hits the word filter. Bad drafts are retried. It checks at startup and every 15 minutes, so tomorrow's story is ready long before midnight.
+
+Once a day's story is picked, it's locked in the database and never changes mid-day. If the AI step fails, or there's no key, the day uses the backup story from `stories.json` that was used longest ago. Bonus rounds ("Play another story") always come from the backup list.
+
+The admin page shows today's and tomorrow's stories, with a "Write a new one" button for tomorrow if you don't like the draft.
+
+## Adding backup stories
+
+Backup stories live in `stories.json`, compiled into the binary. Each one has `blanks` (label, example hint, and `kind`, which picks the 🎲 word list in `words.json`) and six `scenes`. In each scene, `line` is what the narrator reads and the caption shows, and `shot` is the image prompt. `{0}`, `{1}`… are the answers by blank number. The daily story rotates through the list.
 
 ## How it fits together
 
 - `main.go`: server setup, the daily story, the one-at-a-time render queue
 - `api.go`: players, invite codes, trailers, rooms, votes, share pages
 - `store.go`: the SQLite database (players, codes, rooms, trailers, votes)
+- `daily.go`: picking, writing, and locking each day's story
 - `feed.go`: publishing, the public feed, likes and dislikes, reports, originality scores
 - `admin.go`: the admin page
 - `blocklist.txt`: words that force a trailer into review
 - `words.json`: word lists for the random button
-- `gemini.go`: image and speech calls to the Gemini Interactions API
+- `gemini.go`: image, speech, and story-writing calls to the Gemini Interactions API
 - `render.go`: ffmpeg title card, per-shot clips, stitching
 - `web/index.html`: the game page
 - `Dockerfile`, `fly.toml`: the container and Fly.io settings

@@ -41,13 +41,14 @@ func (s *server) today(w http.ResponseWriter, r *http.Request) {
 	idx := s.storyFor(day)
 	practice := false
 	if p := r.URL.Query().Get("story"); p != "" {
-		if n, err := strconv.Atoi(p); err == nil && n >= 0 && n < len(s.stories) {
-			idx, practice = n, n != idx
+		// Bonus rounds come from the backup stories in stories.json.
+		if n, err := strconv.Atoi(p); err == nil && n >= 0 && n < len(s.stories) && n != idx {
+			idx, practice = n, true
 		}
 	}
 	writeJSON(w, 200, map[string]any{
 		"day": day, "storyIndex": idx, "storyCount": len(s.stories), "practice": practice,
-		"story": s.stories[idx], "needsCode": s.codeRequired(), "mock": s.gemini == nil,
+		"story": s.mustStory(idx), "needsCode": s.codeRequired(), "mock": s.gemini == nil,
 	})
 }
 
@@ -146,11 +147,12 @@ func (s *server) create(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, 401, "Enter an invite code to make trailers. Ask whoever runs Blank Reel for one.")
 		return
 	}
-	if in.Story < 0 || in.Story >= len(s.stories) {
-		writeErr(w, 400, "That story doesn't exist.")
+	day := s.dayNo()
+	st, ok := s.storyByID(in.Story)
+	if !ok || (in.Story >= dailyBase && in.Story != s.storyFor(day)) {
+		writeErr(w, 400, "That story isn't playable anymore. Reload to get today's story.")
 		return
 	}
-	st := s.stories[in.Story]
 	if len(in.Answers) != len(st.Blanks) {
 		writeErr(w, 400, fmt.Sprintf("Fill all %d blanks first.", len(st.Blanks)))
 		return
@@ -172,7 +174,6 @@ func (s *server) create(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, 429, "Blank Reel hit today's trailer limit for everyone. Try again tomorrow.")
 		return
 	}
-	day := s.dayNo()
 	t := &Trailer{ID: newID(), PlayerID: p.ID, Day: day, Story: in.Story, Daily: in.Story == s.storyFor(day),
 		Title: st.Title, Answers: in.Answers, Status: "queued", Created: time.Now().Unix()}
 	if err := s.store.insertTrailer(t); err != nil {
@@ -341,7 +342,7 @@ func (s *server) roomWall(w http.ResponseWriter, r *http.Request) {
 	si := s.storyFor(day)
 	writeJSON(w, 200, map[string]any{
 		"room": room, "day": day, "today": today, "date": s.dateOf(day).Format("Mon Jan 2"),
-		"month": s.dateOf(day).Format("January"), "storyIndex": si, "story": s.stories[si],
+		"month": s.dateOf(day).Format("January"), "storyIndex": si, "story": s.mustStory(si),
 		"members": mout, "entries": entries, "locked": locked, "myVote": s.store.myVote(room.ID, day, p.ID),
 		"me": p.ID, "leaderboard": board,
 	})
@@ -468,7 +469,11 @@ func (s *server) sharePage(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		t = s.legacy(id)
 	}
-	if t == nil || t.Status != "done" || t.Hidden || t.Story >= len(s.stories) {
+	st, ok := Story{}, false
+	if t != nil {
+		st, ok = s.storyByID(t.Story)
+	}
+	if t == nil || t.Status != "done" || t.Hidden || !ok {
 		http.NotFound(w, r)
 		return
 	}
@@ -476,7 +481,7 @@ func (s *server) sharePage(w http.ResponseWriter, r *http.Request) {
 	if r.TLS != nil || r.Header.Get("X-Forwarded-Proto") == "https" {
 		scheme = "https"
 	}
-	scenes := s.stories[t.Story].Scenes
+	scenes := st.Scenes
 	shareTmpl.Execute(w, map[string]any{
 		"ID": t.ID, "Title": t.Title, "Day": t.Day, "By": t.Player, "Base": scheme + "://" + r.Host,
 		"Last": fillPlain(scenes[len(scenes)-1].Line, t.Answers),

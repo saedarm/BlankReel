@@ -19,6 +19,7 @@ type Gemini struct {
 	Key        string
 	ImageModel string
 	TTSModel   string
+	TextModel  string
 	Voice      string
 	HTTP       *http.Client
 }
@@ -29,6 +30,7 @@ type interactionResp struct {
 		Content []struct {
 			Type string `json:"type"`
 			Data string `json:"data"`
+			Text string `json:"text"`
 		} `json:"content"`
 	} `json:"steps"`
 }
@@ -66,6 +68,20 @@ func (g *Gemini) Speech(ctx context.Context, text string) ([]byte, error) {
 		"generation_config": map[string]any{"speech_config": []map[string]any{{"voice": g.Voice}}},
 	}
 	return g.call(ctx, body, "audio")
+}
+
+// JSON asks the text model for a JSON reply that follows a schema.
+func (g *Gemini) JSON(ctx context.Context, prompt string, schema any) ([]byte, error) {
+	body := map[string]any{
+		"model": g.TextModel,
+		"input": []map[string]any{{"type": "text", "text": prompt}},
+		"response_format": map[string]any{
+			"type":      "text",
+			"mime_type": "application/json",
+			"schema":    schema,
+		},
+	}
+	return g.call(ctx, body, "text")
 }
 
 func (g *Gemini) call(ctx context.Context, body any, want string) ([]byte, error) {
@@ -107,13 +123,18 @@ func (g *Gemini) call(ctx context.Context, body any, want string) ([]byte, error
 				continue
 			}
 			for _, c := range s.Content {
-				if c.Type == want && c.Data != "" {
+				if c.Type == want && want == "text" && c.Text != "" {
+					data = c.Text
+				} else if c.Type == want && c.Data != "" {
 					data = c.Data
 				}
 			}
 		}
 		if data == "" {
 			return nil, fmt.Errorf("gemini %s: no %s in response (often a safety block): %s", want, want, snippet(raw))
+		}
+		if want == "text" {
+			return []byte(data), nil
 		}
 		return base64.StdEncoding.DecodeString(data)
 	}

@@ -229,5 +229,929 @@
         "shot": "Best man frozen at the microphone, camera close on his {8}, the crowd staring"
       }
     ]
+  },
+  {
+    "title": "The Haunted Drive-Thru",
+    "logline": "Late-night snack. Wrong restaurant.",
+    "blanks": [
+      {
+        "label": "Adjective",
+        "hint": "greasy",
+        "kind": "adjective"
+      },
+      {
+        "label": "Food",
+        "hint": "corn dog",
+        "kind": "food"
+      },
+      {
+        "label": "Job title",
+        "hint": "realtor",
+        "kind": "job"
+      },
+      {
+        "label": "Animal",
+        "hint": "possum",
+        "kind": "animal"
+      },
+      {
+        "label": "Exclamation",
+        "hint": "Yikes",
+        "kind": "exclamation"
+      },
+      {
+        "label": "Body part",
+        "hint": "elbow",
+        "kind": "body_part"
+      },
+      {
+        "label": "Vehicle",
+        "hint": "minivan",
+        "kind": "vehicle"
+      },
+      {
+        "label": "Number",
+        "hint": "3",
+        "kind": "number"
+      },
+      {
+        "label": "Color",
+        "hint": "teal",
+        "kind": "color"
+      }
+    ],
+    "scenes": [
+      {
+        "line": "At {7} a.m., a {6} pulled up to the most {0} drive-thru in Ohio.",
+        "shot": "Foggy night, a lone {6} rolling up to a flickering roadside drive-thru menu board glowing {8} neon"
+      },
+      {
+        "line": "The {8} menu board whispered, \"Would you like a cursed {1}?\"",
+        "shot": "Close-up of a glowing drive-thru speaker box in {8} mist, a {1} pictured on the menu"
+      },
+      {
+        "line": "The cashier was a ghost who used to be a {2}.",
+        "shot": "A translucent ghost in a fast food visor and name tag, dressed like a {2}, at the pickup window"
+      },
+      {
+        "line": "In the back, a {3} was running the fryer.",
+        "shot": "Inside a fast food kitchen, a {3} in a paper hat working the deep fryer, steam everywhere"
+      },
+      {
+        "line": "\"{4}!\" the driver yelled, as something grabbed their {5}.",
+        "shot": "At the car window, a ghostly hand reaching for the driver's {5}, the driver frozen mid-scream"
+      },
+      {
+        "line": "They drove off with no food and a lifetime ban.",
+        "shot": "The {6} speeding away down an empty highway at dawn, the {8} drive-thru sign fading behind it"
+      }
+    ]
+  },
+  {
+    "title": "Little League Championship",
+    "logline": "They've never won a game. Today's the final.",
+    "blanks": [
+      {
+        "label": "First name",
+        "hint": "Doug",
+        "kind": "first_name"
+      },
+      {
+        "label": "Animal (plural)",
+        "hint": "geese",
+        "kind": "animal_plural"
+      },
+      {
+        "label": "Food (plural)",
+        "hint": "pickles",
+        "kind": "food_plural"
+      },
+      {
+        "label": "Verb ending in -ing",
+        "hint": "napping",
+        "kind": "verb_ing"
+      },
+      {
+        "label": "Adjective",
+        "hint": "sticky",
+        "kind": "adjective"
+      },
+      {
+        "label": "Exclamation",
+        "hint": "Cowabunga",
+        "kind": "exclamation"
+      },
+      {
+        "label": "Number",
+        "hint": "9",
+        "kind": "number"
+      },
+      {
+        "label": "Drink",
+        "hint": "Gatorade",
+        "kind": "drink"
+      },
+      {
+        "label": "Dance move",
+        "hint": "the robot",
+        "kind": "dance"
+      }
+    ],
+    "scenes": [
+      {
+        "line": "The {1} had never won a game. Their coach, {0}, was out of ideas.",
+        "shot": "Dusty little league field, a dugout full of {1} wearing tiny baseball caps, a tired coach holding a clipboard"
+      },
+      {
+        "line": "Practice was mostly {3} and eating {2}.",
+        "shot": "Kids' baseball practice, the team {3} in the outfield while the coach hands out {2}"
+      },
+      {
+        "line": "Down by {6} runs in the last inning, the crowd felt {4}.",
+        "shot": "Small-town bleachers packed with parents looking {4}, the scoreboard showing the home team losing"
+      },
+      {
+        "line": "Coach {0} gave a one-word speech: \"{5}.\"",
+        "shot": "Coach kneeling in a dugout huddle giving an intense pep talk to a circle of {1}"
+      },
+      {
+        "line": "The last batter hit a home run and did {8} around the bases.",
+        "shot": "Slow motion, a young batter rounding the bases doing {8}, dust flying, the crowd on its feet"
+      },
+      {
+        "line": "They celebrated by dumping a cooler of {7} on the coach.",
+        "shot": "Players dumping a giant cooler of {7} over the coach's head at home plate, confetti in the air"
+      }
+    ]
+  },
+  {
+    "title": "Uncle's Garage Sale",
+    "logline": "Everything must go. Mostly.",
+    "blanks": [
+      {
+        "label": "First name",
+        "hint": "Earl",
+        "kind": "first_name"
+      },
+      {
+        "label": "Plural noun",
+        "hint": "lawn chairs",
+        "kind": "plural_noun"
+      },
+      {
+        "label": "Number",
+        "hint": "5",
+        "kind": "number"
+      },
+      {
+        "label": "Adjective",
+        "hint": "rusty",
+        "kind": "adjective"
+      },
+      {
+        "label": "Object",
+        "hint": "lava lamp",
+        "kind": "object"
+      },
+      {
+        "label": "Animal",
+        "hint": "goat",
+        "kind": "animal"
+      },
+      {
+        "label": "City",
+        "hint": "Akron",
+        "kind": "city"
+      },
+      {
+        "label": "Silly word",
+        "hint": "bazinga",
+        "kind": "silly"
+      },
+      {
+        "label": "Exclamation",
+        "hint": "Holy moly",
+        "kind": "exclamation"
+      }
+    ],
+    "scenes": [
+      {
+        "line": "Uncle {0} held a garage sale to finally get rid of his {1}.",
+        "shot": "Suburban driveway garage sale, folding tables piled high with {1}, a hand-painted sign"
+      },
+      {
+        "line": "Everything was priced at exactly {2} dollars, including the garage.",
+        "shot": "Close-up of handwritten price stickers reading {2} dollars on everything, including the garage door"
+      },
+      {
+        "line": "The first customer wanted his {3} {4}, which was not for sale.",
+        "shot": "A customer holding up a {3} {4} while the uncle clutches it protectively"
+      },
+      {
+        "line": "Then a {5} wandered in and started haggling.",
+        "shot": "A {5} standing at a garage sale table pointing at items like it's negotiating, the uncle stunned"
+      },
+      {
+        "line": "A van from {6} bought the whole sale for one word: \"{7}.\"",
+        "shot": "A rusty van with {6} written on the side in the driveway, a buyer in sunglasses shaking the uncle's hand"
+      },
+      {
+        "line": "Uncle {0} counted the cash, yelled \"{8}!\", and bought it all back.",
+        "shot": "The uncle standing in an empty driveway holding a fistful of cash, then chasing the van down the street"
+      }
+    ]
+  },
+  {
+    "title": "The Science Fair",
+    "logline": "One volcano. One secret ingredient.",
+    "blanks": [
+      {
+        "label": "First name",
+        "hint": "Brenda",
+        "kind": "first_name"
+      },
+      {
+        "label": "Something in your kitchen",
+        "hint": "colander",
+        "kind": "kitchen"
+      },
+      {
+        "label": "Color",
+        "hint": "chartreuse",
+        "kind": "color"
+      },
+      {
+        "label": "Adjective",
+        "hint": "soggy",
+        "kind": "adjective"
+      },
+      {
+        "label": "Animal",
+        "hint": "hamster",
+        "kind": "animal"
+      },
+      {
+        "label": "Exclamation",
+        "hint": "Great Scott",
+        "kind": "exclamation"
+      },
+      {
+        "label": "Body part",
+        "hint": "kneecap",
+        "kind": "body_part"
+      },
+      {
+        "label": "Job title",
+        "hint": "dentist",
+        "kind": "job"
+      },
+      {
+        "label": "Object",
+        "hint": "rubber chicken",
+        "kind": "object"
+      }
+    ],
+    "scenes": [
+      {
+        "line": "{0}'s science fair project was a volcano built from a {1}.",
+        "shot": "Middle school gym science fair, a lumpy papier-mache volcano built around a {1} on a folding table"
+      },
+      {
+        "line": "The judge, a retired {7}, said it looked {3}.",
+        "shot": "A stern science fair judge dressed like a {7} squinting at the volcano over a clipboard"
+      },
+      {
+        "line": "So {0} added a secret ingredient: one {8}.",
+        "shot": "Close-up of a nervous kid dropping a {8} into the top of the volcano"
+      },
+      {
+        "line": "The volcano erupted {2} foam across the whole gym.",
+        "shot": "A huge eruption of {2} foam blasting from the volcano, kids diving out of the way"
+      },
+      {
+        "line": "The class {4} escaped in the chaos and bit the judge's {6}.",
+        "shot": "A {4} leaping out of a cage toward the judge, foam everywhere, the judge grabbing his {6}"
+      },
+      {
+        "line": "\"{5}!\" said the principal, and gave {0} first place anyway.",
+        "shot": "A foam-covered principal handing a blue ribbon to the kid in a wrecked gym"
+      }
+    ]
+  },
+  {
+    "title": "Grandma's Cooking Show",
+    "logline": "Live, unscripted, and slightly on fire.",
+    "blanks": [
+      {
+        "label": "Food",
+        "hint": "meatloaf",
+        "kind": "food"
+      },
+      {
+        "label": "Adjective",
+        "hint": "crispy",
+        "kind": "adjective"
+      },
+      {
+        "label": "Something in your kitchen",
+        "hint": "turkey baster",
+        "kind": "kitchen"
+      },
+      {
+        "label": "Number",
+        "hint": "12",
+        "kind": "number"
+      },
+      {
+        "label": "Verb ending in -ing",
+        "hint": "line dancing",
+        "kind": "verb_ing"
+      },
+      {
+        "label": "Drink",
+        "hint": "eggnog",
+        "kind": "drink"
+      },
+      {
+        "label": "Exclamation",
+        "hint": "Good gravy",
+        "kind": "exclamation"
+      },
+      {
+        "label": "Animal",
+        "hint": "corgi",
+        "kind": "animal"
+      },
+      {
+        "label": "Body part",
+        "hint": "elbow",
+        "kind": "body_part"
+      }
+    ],
+    "scenes": [
+      {
+        "line": "Welcome back to Grandma's Kitchen. Today we're making {1} {0}.",
+        "shot": "A bright retro TV cooking show set, a cheerful grandma in an apron holding up a {0}"
+      },
+      {
+        "line": "First, beat {3} eggs with a {2}.",
+        "shot": "Close-up of grandma aggressively whisking eggs in a bowl with a {2}"
+      },
+      {
+        "line": "Add a splash of {5}. Then a bigger splash.",
+        "shot": "Grandma pouring far too much {5} into a mixing bowl, smiling at the camera"
+      },
+      {
+        "line": "Grandma does her best work while {4}.",
+        "shot": "Grandma {4} around the kitchen while a pot boils over behind her"
+      },
+      {
+        "line": "\"{6}!\" The oven was on fire, and the family {7} was helping.",
+        "shot": "Smoke pouring from an oven, a {7} holding a tiny fire extinguisher, grandma completely calm"
+      },
+      {
+        "line": "Serve warm. Grandma tests it with her {8}, for some reason.",
+        "shot": "Grandma presenting a burnt {0} on a platter and poking it with her {8}, the studio audience applauding"
+      }
+    ]
+  },
+  {
+    "title": "Bigfoot's First Date",
+    "logline": "He swiped right. Now he has to show up.",
+    "blanks": [
+      {
+        "label": "City",
+        "hint": "Boise",
+        "kind": "city"
+      },
+      {
+        "label": "Adjective",
+        "hint": "fluffy",
+        "kind": "adjective"
+      },
+      {
+        "label": "Vehicle",
+        "hint": "Segway",
+        "kind": "vehicle"
+      },
+      {
+        "label": "Food",
+        "hint": "pot roast",
+        "kind": "food"
+      },
+      {
+        "label": "Drink",
+        "hint": "root beer",
+        "kind": "drink"
+      },
+      {
+        "label": "Dance move",
+        "hint": "the Macarena",
+        "kind": "dance"
+      },
+      {
+        "label": "Plural noun",
+        "hint": "garden gnomes",
+        "kind": "plural_noun"
+      },
+      {
+        "label": "Exclamation",
+        "hint": "Mamma mia",
+        "kind": "exclamation"
+      },
+      {
+        "label": "Body part",
+        "hint": "eyebrows",
+        "kind": "body_part"
+      }
+    ],
+    "scenes": [
+      {
+        "line": "Bigfoot finally matched with someone from {0}.",
+        "shot": "Bigfoot in a dark forest staring at a glowing phone with a dating app open, grinning"
+      },
+      {
+        "line": "He wore his most {1} sweater and drove a borrowed {2}.",
+        "shot": "Bigfoot in a {1} knit sweater climbing out of a tiny {2} in a restaurant parking lot"
+      },
+      {
+        "line": "Dinner was {3} and two glasses of {4}.",
+        "shot": "A candlelit restaurant table, Bigfoot awkwardly holding a fork over {3}, two glasses of {4}"
+      },
+      {
+        "line": "To break the ice, he did {5} in the middle of the restaurant.",
+        "shot": "Bigfoot doing {5} between the restaurant tables while diners stare"
+      },
+      {
+        "line": "His date said \"{7}\" and pulled off a mask. It was another Bigfoot.",
+        "shot": "Dramatic reveal, Bigfoot's date pulling off a human mask to show another Bigfoot underneath"
+      },
+      {
+        "line": "They live in the woods now, with forty {6} and very fancy {8}.",
+        "shot": "Two Bigfoots in a cozy forest cabin surrounded by {6}, holding hands, close-up of well-groomed {8}"
+      }
+    ]
+  },
+  {
+    "title": "The Office Fire Drill",
+    "logline": "Grab what matters. Leave the rest.",
+    "blanks": [
+      {
+        "label": "First name",
+        "hint": "Kevin",
+        "kind": "first_name"
+      },
+      {
+        "label": "Job title",
+        "hint": "mime",
+        "kind": "job"
+      },
+      {
+        "label": "Object",
+        "hint": "stapler",
+        "kind": "object"
+      },
+      {
+        "label": "Adjective",
+        "hint": "sparkly",
+        "kind": "adjective"
+      },
+      {
+        "label": "Number",
+        "hint": "4",
+        "kind": "number"
+      },
+      {
+        "label": "Exclamation",
+        "hint": "Not again",
+        "kind": "exclamation"
+      },
+      {
+        "label": "Animal (plural)",
+        "hint": "otters",
+        "kind": "animal_plural"
+      },
+      {
+        "label": "Verb, past tense",
+        "hint": "cartwheeled",
+        "kind": "verb_past"
+      },
+      {
+        "label": "Food",
+        "hint": "fish stick",
+        "kind": "food"
+      }
+    ],
+    "scenes": [
+      {
+        "line": "At {4} o'clock sharp, the fire alarm went off at Synergy Solutions.",
+        "shot": "A fluorescent cubicle office, red alarm lights flashing, coworkers looking up from their computers"
+      },
+      {
+        "line": "{0} from accounting grabbed the most important thing: a {2}.",
+        "shot": "An office worker sprinting past cubicles clutching a {2} like it's a baby"
+      },
+      {
+        "line": "The fire marshal was a {1} in a {3} helmet.",
+        "shot": "A {1} wearing a {3} fire helmet holding a megaphone in a parking lot"
+      },
+      {
+        "line": "Everyone {7} down twelve flights of stairs.",
+        "shot": "Stairwell chaos, office workers who {7} down the stairs in business clothes"
+      },
+      {
+        "line": "Outside, they found the cause: {6} microwaving a {8}.",
+        "shot": "A break room window, a group of {6} crowded around a smoking microwave with a {8} inside"
+      },
+      {
+        "line": "\"{5},\" said the boss. \"Same time next week.\"",
+        "shot": "The boss in a tie addressing a crowd of soot-covered employees in the parking lot, deadpan"
+      }
+    ]
+  },
+  {
+    "title": "Viking Funeral for a Goldfish",
+    "logline": "He deserved a proper send-off.",
+    "blanks": [
+      {
+        "label": "First name",
+        "hint": "Gerald",
+        "kind": "first_name"
+      },
+      {
+        "label": "Adjective",
+        "hint": "majestic",
+        "kind": "adjective"
+      },
+      {
+        "label": "Object",
+        "hint": "snow globe",
+        "kind": "object"
+      },
+      {
+        "label": "Plural noun",
+        "hint": "coupons",
+        "kind": "plural_noun"
+      },
+      {
+        "label": "Verb ending in -ing",
+        "hint": "sobbing",
+        "kind": "verb_ing"
+      },
+      {
+        "label": "Color",
+        "hint": "puce",
+        "kind": "color"
+      },
+      {
+        "label": "Exclamation",
+        "hint": "Bingo",
+        "kind": "exclamation"
+      },
+      {
+        "label": "Silly word",
+        "hint": "kerplunk",
+        "kind": "silly"
+      },
+      {
+        "label": "Food",
+        "hint": "pancake",
+        "kind": "food"
+      }
+    ],
+    "scenes": [
+      {
+        "line": "Our goldfish, {0}, lived a {1} life.",
+        "shot": "A small goldfish bowl on a kitchen counter, a framed photo of the goldfish beside it, lit candles"
+      },
+      {
+        "line": "So we gave him a Viking funeral on a {2}.",
+        "shot": "A {2} turned into a tiny Viking ship floating on a backyard kiddie pool at sunset"
+      },
+      {
+        "line": "Dad loaded it with {3} and one {8} for the journey.",
+        "shot": "Dad carefully placing {3} and a {8} on the tiny ship while the kids watch solemnly"
+      },
+      {
+        "line": "My little brother played the kazoo while {4}.",
+        "shot": "A kid in a plastic Viking helmet {4} while playing a kazoo, the family in bathrobes"
+      },
+      {
+        "line": "Mom lit it, and it burned {5} for nine minutes.",
+        "shot": "The tiny ship burning with {5} flames on the kiddie pool, family silhouettes against the sunset"
+      },
+      {
+        "line": "Then {0} jumped out of his bowl yelling \"{6}! {7}!\" He wasn't dead.",
+        "shot": "A goldfish leaping out of its bowl in midair, the family's jaws dropping, the ship still burning"
+      }
+    ]
+  },
+  {
+    "title": "The HOA Meeting",
+    "logline": "One mailbox. Forty angry neighbors.",
+    "blanks": [
+      {
+        "label": "First name",
+        "hint": "Linda",
+        "kind": "first_name"
+      },
+      {
+        "label": "Color",
+        "hint": "hot pink",
+        "kind": "color"
+      },
+      {
+        "label": "Plural noun",
+        "hint": "flamingos",
+        "kind": "plural_noun"
+      },
+      {
+        "label": "Animal",
+        "hint": "badger",
+        "kind": "animal"
+      },
+      {
+        "label": "Number",
+        "hint": "47",
+        "kind": "number"
+      },
+      {
+        "label": "Adjective",
+        "hint": "unhinged",
+        "kind": "adjective"
+      },
+      {
+        "label": "Object",
+        "hint": "tambourine",
+        "kind": "object"
+      },
+      {
+        "label": "Exclamation",
+        "hint": "Heavens to Betsy",
+        "kind": "exclamation"
+      },
+      {
+        "label": "Job title",
+        "hint": "lunch lady",
+        "kind": "job"
+      }
+    ],
+    "scenes": [
+      {
+        "line": "HOA president {0} called an emergency meeting about Dave's {1} mailbox.",
+        "shot": "A suburban clubhouse with folding chairs, an angry HOA president at a podium, a photo of a {1} mailbox on an easel"
+      },
+      {
+        "line": "Rule {4} clearly bans {2} on any lawn.",
+        "shot": "Close-up of a thick HOA rulebook open to a page about {2}, highlighted in yellow"
+      },
+      {
+        "line": "Dave arrived with his lawyer, who was a {3}.",
+        "shot": "Dave walking into the meeting with a {3} in a tiny suit carrying a briefcase"
+      },
+      {
+        "line": "Things got {5} when someone threw a {6}.",
+        "shot": "Neighbors arguing, a {6} flying across the clubhouse in slow motion"
+      },
+      {
+        "line": "\"{7}!\" yelled the retired {8} in the back row.",
+        "shot": "An older person dressed as a retired {8} standing up dramatically in the back row"
+      },
+      {
+        "line": "Dave won. The mailbox stays. {0} moved to Florida.",
+        "shot": "A moving truck pulling away from a spotless house, the {1} mailbox gleaming next door"
+      }
+    ]
+  },
+  {
+    "title": "Pirate Job Interview",
+    "logline": "Great benefits. Terrible commute.",
+    "blanks": [
+      {
+        "label": "Job title",
+        "hint": "accountant",
+        "kind": "job"
+      },
+      {
+        "label": "Adjective",
+        "hint": "overconfident",
+        "kind": "adjective"
+      },
+      {
+        "label": "Body part",
+        "hint": "pinky finger",
+        "kind": "body_part"
+      },
+      {
+        "label": "Animal",
+        "hint": "ferret",
+        "kind": "animal"
+      },
+      {
+        "label": "Number",
+        "hint": "6",
+        "kind": "number"
+      },
+      {
+        "label": "Plural noun",
+        "hint": "rubber ducks",
+        "kind": "plural_noun"
+      },
+      {
+        "label": "Verb, past tense",
+        "hint": "moonwalked",
+        "kind": "verb_past"
+      },
+      {
+        "label": "Exclamation",
+        "hint": "Shut the front door",
+        "kind": "exclamation"
+      },
+      {
+        "label": "Food",
+        "hint": "pierogi",
+        "kind": "food"
+      }
+    ],
+    "scenes": [
+      {
+        "line": "I applied to be a pirate after {4} years as a {0}.",
+        "shot": "A nervous job applicant in business clothes sitting across from a pirate captain in a ship's cabin"
+      },
+      {
+        "line": "The captain asked for my greatest weakness. I said my {2}.",
+        "shot": "A pirate captain with an eye patch leaning in, the applicant pointing at their own {2}"
+      },
+      {
+        "line": "My references were a parrot and a {1} {3}.",
+        "shot": "A parrot and a {1} {3} standing on the captain's desk as references, the captain taking notes"
+      },
+      {
+        "line": "For the skills test, I {6} across the deck.",
+        "shot": "The applicant who {6} across a wooden pirate ship deck while the crew watches"
+      },
+      {
+        "line": "Benefits include dental, {5}, and unlimited {8}.",
+        "shot": "A pirate holding up a scroll of benefits beside a treasure chest full of {5} and {8}"
+      },
+      {
+        "line": "\"{7}!\" said the captain. I start Monday.",
+        "shot": "The captain shaking the applicant's hand, the crew cheering, sails going up at sunset"
+      }
+    ]
+  },
+  {
+    "title": "The New Mall Santa",
+    "logline": "He passed the background check. Barely.",
+    "blanks": [
+      {
+        "label": "First name",
+        "hint": "Randy",
+        "kind": "first_name"
+      },
+      {
+        "label": "Adjective",
+        "hint": "nervous",
+        "kind": "adjective"
+      },
+      {
+        "label": "Animal (plural)",
+        "hint": "alpacas",
+        "kind": "animal_plural"
+      },
+      {
+        "label": "Vehicle",
+        "hint": "golf cart",
+        "kind": "vehicle"
+      },
+      {
+        "label": "Food (plural)",
+        "hint": "cheese curds",
+        "kind": "food_plural"
+      },
+      {
+        "label": "Drink",
+        "hint": "Mountain Dew",
+        "kind": "drink"
+      },
+      {
+        "label": "Plural noun",
+        "hint": "scratch-off tickets",
+        "kind": "plural_noun"
+      },
+      {
+        "label": "Exclamation",
+        "hint": "Whoa Nelly",
+        "kind": "exclamation"
+      },
+      {
+        "label": "Number",
+        "hint": "8",
+        "kind": "number"
+      }
+    ],
+    "scenes": [
+      {
+        "line": "This year the mall hired a new Santa named {0}.",
+        "shot": "A shopping mall Christmas village, a skinny new Santa in an oversized suit on a big throne"
+      },
+      {
+        "line": "His reindeer were {8} {2}, and they were {1}.",
+        "shot": "A mall Santa display with {2} wearing felt antlers, looking {1}"
+      },
+      {
+        "line": "His sleigh was a {3} with Christmas lights duct-taped on.",
+        "shot": "A {3} covered in duct-taped Christmas lights parked in the mall atrium"
+      },
+      {
+        "line": "Santa {0} ate {4} between kids and drank {5}.",
+        "shot": "The mall Santa eating {4} and sipping {5} behind his throne on a break"
+      },
+      {
+        "line": "One kid asked for world peace. Santa offered {6}.",
+        "shot": "A small child on Santa's lap, Santa handing over {6} with a big wink"
+      },
+      {
+        "line": "\"{7}!\" Mall security walked Santa out by noon.",
+        "shot": "Two mall cops escorting Santa past the food court while kids wave goodbye"
+      }
+    ]
+  },
+  {
+    "title": "Gym Bro: A Nature Documentary",
+    "logline": "Observe him in his natural habitat.",
+    "blanks": [
+      {
+        "label": "First name",
+        "hint": "Chad",
+        "kind": "first_name"
+      },
+      {
+        "label": "Body part",
+        "hint": "calf",
+        "kind": "body_part"
+      },
+      {
+        "label": "Number",
+        "hint": "17",
+        "kind": "number"
+      },
+      {
+        "label": "Food (plural)",
+        "hint": "deviled eggs",
+        "kind": "food_plural"
+      },
+      {
+        "label": "Drink",
+        "hint": "chocolate milk",
+        "kind": "drink"
+      },
+      {
+        "label": "Verb ending in -ing",
+        "hint": "juggling",
+        "kind": "verb_ing"
+      },
+      {
+        "label": "Animal",
+        "hint": "walrus",
+        "kind": "animal"
+      },
+      {
+        "label": "Adjective",
+        "hint": "jacked",
+        "kind": "adjective"
+      },
+      {
+        "label": "Exclamation",
+        "hint": "Abort",
+        "kind": "exclamation"
+      }
+    ],
+    "scenes": [
+      {
+        "line": "This is {0}. He has trained his {1} every day for {2} years.",
+        "shot": "Nature documentary style, a huge gym bro flexing his {1} in a gym mirror"
+      },
+      {
+        "line": "In the wild, he eats nothing but {3}.",
+        "shot": "The gym bro in a kitchen eating a mountain of {3} out of a plastic container with intense focus"
+      },
+      {
+        "line": "He drinks {4}, a gallon at a time.",
+        "shot": "The gym bro chugging a gallon jug of {4} in slow motion"
+      },
+      {
+        "line": "To attract a mate, he begins {5}.",
+        "shot": "The gym bro {5} in the middle of the gym floor while other gym-goers stare"
+      },
+      {
+        "line": "His only rival is a {7} {6} who lifts more.",
+        "shot": "A {7} {6} bench pressing a huge barbell next to the gym bro, who looks devastated"
+      },
+      {
+        "line": "\"{8},\" he whispers. Tomorrow is leg day.",
+        "shot": "The gym bro sitting alone in a locker room at night, whispering to himself, dramatic lighting"
+      }
+    ]
   }
 ]
